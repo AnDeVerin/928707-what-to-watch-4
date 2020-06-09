@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Андрей Вершинин](https://up.htmlacademy.ru/react/4/user/928707).
-* Наставник: `Неизвестно`.
+* Наставник: [Виталий Комолаев](https://htmlacademy.ru/profile/id1274335).
 
 ---
 
