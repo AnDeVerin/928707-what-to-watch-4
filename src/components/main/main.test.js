@@ -13,7 +13,13 @@ const MOVIES = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`];
 describe('Main component', () => {
   it('renders correctly', () => {
     const component = renderer
-      .create(<Main selectedMovie={SELECTED_MOVIE} movies={MOVIES} />)
+      .create(
+        <Main
+          selectedMovie={SELECTED_MOVIE}
+          movies={MOVIES}
+          onCardClick={jest.fn()}
+        />
+      )
       .toJSON();
 
     expect(component).toMatchSnapshot();
