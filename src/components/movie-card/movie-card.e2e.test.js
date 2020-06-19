@@ -12,13 +12,13 @@ const movie = {
 };
 
 describe('MovieCard component', () => {
-  it('calls passed function on card title click', () => {
+  it('calls passed function on card hover', () => {
     const onHoverMock = jest.fn();
 
     const component = mount(<MovieCard movie={movie} onHover={onHoverMock} />);
 
-    const movieCardTitle = component.find('.small-movie-card__link');
-    movieCardTitle.simulate('mouseover');
+    const movieCard = component.find('.small-movie-card');
+    movieCard.simulate('mouseenter');
 
     expect(onHoverMock).toHaveBeenCalled();
     expect(onHoverMock).toHaveBeenCalledWith(movie);

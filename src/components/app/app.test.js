@@ -8,7 +8,16 @@ const SELECTED_MOVIE = {
   realeseYear: 2014,
 };
 
-const MOVIES = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`];
+const MOVIES = [
+  {
+    title: 'Fantastic Beasts: The Crimes of Grindelwald',
+    thumbUrl: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
+  },
+  {
+    title: 'Bohemian Rhapsody',
+    thumbUrl: 'img/bohemian-rhapsody.jpg',
+  },
+];
 
 describe('App component', () => {
   it('renders correctly', () => {
