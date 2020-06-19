@@ -6,17 +6,21 @@ import MovieCard from './movie-card.jsx';
 
 configure({ adapter: new Adapter() });
 
+const movie = {
+  title: 'Aviator',
+  thumbUrl: 'img/aviator.jpg',
+};
+
 describe('MovieCard component', () => {
   it('calls passed function on card title click', () => {
-    const onClickMock = jest.fn();
+    const onHoverMock = jest.fn();
 
-    const component = mount(
-      <MovieCard title={`My favourite movie`} onClick={onClickMock} />
-    );
+    const component = mount(<MovieCard movie={movie} onHover={onHoverMock} />);
 
     const movieCardTitle = component.find('.small-movie-card__link');
-    movieCardTitle.simulate('click');
+    movieCardTitle.simulate('mouseover');
 
-    expect(onClickMock).toHaveBeenCalled();
+    expect(onHoverMock).toHaveBeenCalled();
+    expect(onHoverMock).toHaveBeenCalledWith(movie);
   });
 });
