@@ -1,23 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MovieCard = ({ title, onClick }) => {
+const MovieCard = ({ movie, onHover }) => {
+  const { title, thumbUrl } = movie;
+
   return (
-    <article key={title} className="small-movie-card catalog__movies-card">
+    <article
+      key={`${title}-${thumbUrl}`}
+      className="small-movie-card catalog__movies-card"
+      onMouseEnter={() => onHover(movie)}
+    >
       <div className="small-movie-card__image">
-        <img
-          src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-          alt="Fantastic Beasts: The Crimes of Grindelwald"
-          width="280"
-          height="175"
-        />
+        <img src={thumbUrl} alt={title} width="280" height="175" />
       </div>
+
       <h3 className="small-movie-card__title">
-        <a
-          className="small-movie-card__link"
-          href="movie-page.html"
-          onClick={onClick}
-        >
+        <a className="small-movie-card__link" href="movie-page.html">
           {title}
         </a>
       </h3>
@@ -26,8 +24,11 @@ const MovieCard = ({ title, onClick }) => {
 };
 
 MovieCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    thumbUrl: PropTypes.string.isRequired,
+  }).isRequired,
+  onHover: PropTypes.func.isRequired,
 };
 
 export default MovieCard;
