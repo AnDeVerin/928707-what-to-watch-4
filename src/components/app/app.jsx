@@ -8,12 +8,33 @@ import MoviePage from '../movie-page/movie-page.jsx';
 class App extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      selectedMovie: null,
+    };
+
+    this.handleMovieSelect = this.handleMovieSelect.bind(this);
+  }
+
+  handleMovieSelect(selectedMovie) {
+    this.setState({ selectedMovie });
   }
 
   _renderApp() {
     const { promoMovie, movies } = this.props;
+    const { selectedMovie } = this.state;
 
-    return <Main promoMovie={promoMovie} movies={movies} />;
+    if (selectedMovie) {
+      return <MoviePage movie={selectedMovie} />;
+    }
+
+    return (
+      <Main
+        promoMovie={promoMovie}
+        movies={movies}
+        onMovieSelect={this.handleMovieSelect}
+      />
+    );
   }
 
   render() {
