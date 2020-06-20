@@ -12,6 +12,7 @@ module.exports = {
     contentBase: publicFolder,
     open: false,
     port: 1337,
+    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -21,7 +22,7 @@ module.exports = {
         use: {
           loader: `babel-loader`,
         },
-      }
+      },
     ],
   },
   devtool: `source-map`,
