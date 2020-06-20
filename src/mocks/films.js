@@ -1,4 +1,10 @@
-export default [
+export const PROMO_MOVIE = {
+  title: `The Grand Budapest Hotel`,
+  genre: `Drama`,
+  realeseYear: 2014,
+};
+
+export const MOVIES = [
   {
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     thumbUrl: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',

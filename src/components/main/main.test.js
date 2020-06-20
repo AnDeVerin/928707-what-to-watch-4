@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Main from './main.jsx';
 
-const SELECTED_MOVIE = {
+const PROMO_MOVIE = {
   title: `The Grand Budapest Hotel`,
   genre: `Drama`,
   realeseYear: 2014,
@@ -24,7 +24,7 @@ describe('Main component', () => {
     const component = renderer
       .create(
         <Main
-          selectedMovie={SELECTED_MOVIE}
+          promoMovie={PROMO_MOVIE}
           movies={MOVIES}
           onCardClick={jest.fn()}
         />
