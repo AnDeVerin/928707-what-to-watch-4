@@ -10,10 +10,15 @@ class MoviesList extends PureComponent {
     };
 
     this.handleCardHover = this.handleCardHover.bind(this);
+    this.handleCardClick = this.handleCardClick.bind(this);
   }
 
   handleCardHover(activeMovie) {
     this.setState({ activeMovie });
+  }
+
+  handleCardClick(movie) {
+    this.props.onSelect(movie);
   }
 
   render() {
@@ -26,6 +31,7 @@ class MoviesList extends PureComponent {
             key={`${movie.thumbUrl}-${i}`}
             movie={movie}
             onHover={this.handleCardHover}
+            onClick={this.handleCardClick}
           />
         ))}
       </div>
@@ -35,6 +41,7 @@ class MoviesList extends PureComponent {
 
 MoviesList.propTypes = {
   movies: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default MoviesList;
