@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Main from '../main/main.jsx';
+import MoviePage from '../movie-page/movie-page.jsx';
 
 class App extends PureComponent {
   constructor(props) {
@@ -22,8 +23,8 @@ class App extends PureComponent {
           <Route exact path="/">
             {this._renderApp()}
           </Route>
-          <Route exact path="/dev-component">
-            {/* <Component /> */}
+          <Route exact path="/dev-movie">
+            <MoviePage movie={this.props.movies[0]} />
           </Route>
         </Switch>
       </BrowserRouter>
