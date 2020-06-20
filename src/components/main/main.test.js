@@ -26,7 +26,7 @@ describe('Main component', () => {
         <Main
           promoMovie={PROMO_MOVIE}
           movies={MOVIES}
-          onCardClick={jest.fn()}
+          onMovieSelect={jest.fn()}
         />
       )
       .toJSON();

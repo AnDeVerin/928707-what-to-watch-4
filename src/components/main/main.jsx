@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MoviesList from '../movies-list/movies-list.jsx';
 
-const Main = ({ promoMovie, movies }) => {
+const Main = ({ promoMovie, movies, onMovieSelect }) => {
   const { title, genre, realeseYear } = promoMovie;
 
   return (
@@ -135,7 +135,7 @@ const Main = ({ promoMovie, movies }) => {
             </li>
           </ul>
 
-          <MoviesList movies={movies} />
+          <MoviesList movies={movies} onSelect={onMovieSelect} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">
@@ -169,6 +169,7 @@ Main.propTypes = {
     realeseYear: PropTypes.number.isRequired,
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onMovieSelect: PropTypes.func.isRequired,
 };
 
 export default Main;
