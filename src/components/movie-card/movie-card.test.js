@@ -10,7 +10,9 @@ const movie = {
 describe('MovieCard component', () => {
   it('renders correctly', () => {
     const component = renderer
-      .create(<MovieCard movie={movie} onHover={jest.fn()} />)
+      .create(
+        <MovieCard movie={movie} onHover={jest.fn()} onClick={jest.fn()} />
+      )
       .toJSON();
 
     expect(component).toMatchSnapshot();

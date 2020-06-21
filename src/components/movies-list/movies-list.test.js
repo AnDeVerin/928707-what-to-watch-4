@@ -15,7 +15,9 @@ const MOVIES = [
 
 describe('MovieCard component', () => {
   it('renders correctly', () => {
-    const component = renderer.create(<MoviesList movies={MOVIES} />).toJSON();
+    const component = renderer
+      .create(<MoviesList movies={MOVIES} onSelect={jest.fn()} />)
+      .toJSON();
 
     expect(component).toMatchSnapshot();
   });
