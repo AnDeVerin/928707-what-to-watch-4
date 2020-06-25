@@ -16,6 +16,7 @@ const MOVIES = [
     realeseYear: 2018,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BYWVlMDI5N2UtZTIyMC00NjZkLWI5Y2QtODM5NGE5MzA0NmVjXkEyXkFqcGdeQXVyNzU3NjUxMzE@._V1_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BYTRiOTM4YzEtN2MwMC00MjMxLWIxM2ItMGE1YzA1MjNkN2YzXkEyXkFqcGdeQXVyNjQ4ODE4MzQ@._V1_SX1777_CR0,0,1777,999_AL_.jpg`,
+    trailer: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     overview: {
       rating: {
         value: 6.6,
@@ -35,6 +36,7 @@ const MOVIES = [
     realeseYear: 2018,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BMTA2NDc3Njg5NDVeQTJeQWpwZ15BbWU4MDc1NDcxNTUz._V1_SY1000_CR0,0,674,1000_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BMTYwYzMwMGItZDkzOS00YTczLTg2MDAtNDA2MWY2YmU5NDZiXkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_.jpg`,
+    trailer: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     overview: {
       rating: {
         value: 8.5,
