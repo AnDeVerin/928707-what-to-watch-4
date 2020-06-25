@@ -9,6 +9,7 @@ configure({ adapter: new Adapter() });
 const movie = {
   title: 'Aviator',
   thumbUrl: 'img/aviator.jpg',
+  trailer: 'https://example.com/video.mp4',
 };
 
 describe('MovieCard component', () => {

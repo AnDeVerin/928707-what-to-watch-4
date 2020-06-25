@@ -5,6 +5,7 @@ import MovieCard from './movie-card.jsx';
 const movie = {
   title: 'Aviator',
   thumbUrl: 'img/aviator.jpg',
+  trailer: 'https://example.com/video.mp4',
 };
 
 describe('MovieCard component', () => {
