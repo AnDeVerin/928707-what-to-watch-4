@@ -29,7 +29,12 @@ describe('Main component', () => {
           promoMovie={PROMO_MOVIE}
           movies={MOVIES}
           onMovieSelect={jest.fn()}
-        />
+        />,
+        {
+          createNodeMock: () => {
+            return {};
+          },
+        }
       )
       .toJSON();
 

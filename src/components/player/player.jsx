@@ -6,20 +6,10 @@ export default class Player extends PureComponent {
     super(props);
 
     this._videoRef = createRef();
-
-    this.state = {
-      isPlaying: props.isPlaying,
-      isMuted: props.isMuted,
-    };
   }
 
   componentDidMount() {
-    const { src, poster } = this.props;
-
     const video = this._videoRef.current;
-    video.src = src;
-    video.poster = poster;
-    video.play();
 
     video.onplay = () => {
       this.setState({
@@ -43,15 +33,28 @@ export default class Player extends PureComponent {
     video = null;
   }
 
+  componentDidUpdate() {
+    const { isPlaying } = this.props;
+    const video = this._videoRef.current;
+
+    if (isPlaying) {
+      video.play();
+    } else {
+      video.load();
+    }
+  }
+
   render() {
-    const { isMuted } = this.state;
+    const { poster, isMuted, src } = this.props;
 
     return (
       <video
         className="player__video"
         playsInline
+        poster={poster}
         muted={isMuted}
         ref={this._videoRef}
+        src={src}
       />
     );
   }

@@ -10,11 +10,12 @@ exports[`MovieCard component renders correctly 1`] = `
     className="small-movie-card__image"
     onClick={[Function]}
   >
-    <img
-      alt="Aviator"
-      height="175"
-      src="img/aviator.jpg"
-      width="280"
+    <video
+      className="player__video"
+      muted={true}
+      playsInline={true}
+      poster="img/aviator.jpg"
+      src="https://example.com/video.mp4"
     />
   </div>
   <h3

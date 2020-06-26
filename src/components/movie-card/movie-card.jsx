@@ -59,16 +59,12 @@ export default class MovieCard extends PureComponent {
         onMouseLeave={this.handleMouseLeave}
       >
         <div className="small-movie-card__image" onClick={this.handleClick}>
-          {isPlaying ? (
-            <Player
-              isPlaying={isPlaying}
-              poster={thumbUrl}
-              src={trailer}
-              isMuted={true}
-            />
-          ) : (
-            <img src={thumbUrl} alt={title} width="280" height="175" />
-          )}
+          <Player
+            isPlaying={isPlaying}
+            poster={thumbUrl}
+            src={trailer}
+            isMuted={true}
+          />
         </div>
 
         <h3 className="small-movie-card__title" onClick={this.handleClick}>

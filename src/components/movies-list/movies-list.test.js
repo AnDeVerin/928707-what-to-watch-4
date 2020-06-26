@@ -18,7 +18,11 @@ const MOVIES = [
 describe('MovieCard component', () => {
   it('renders correctly', () => {
     const component = renderer
-      .create(<MoviesList movies={MOVIES} onSelect={jest.fn()} />)
+      .create(<MoviesList movies={MOVIES} onSelect={jest.fn()} />, {
+        createNodeMock: () => {
+          return {};
+        },
+      })
       .toJSON();
 
     expect(component).toMatchSnapshot();

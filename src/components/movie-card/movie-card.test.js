@@ -12,7 +12,12 @@ describe('MovieCard component', () => {
   it('renders correctly', () => {
     const component = renderer
       .create(
-        <MovieCard movie={movie} onHover={jest.fn()} onClick={jest.fn()} />
+        <MovieCard movie={movie} onHover={jest.fn()} onClick={jest.fn()} />,
+        {
+          createNodeMock: () => {
+            return {};
+          },
+        }
       )
       .toJSON();
 

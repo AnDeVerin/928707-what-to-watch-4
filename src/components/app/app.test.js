@@ -54,7 +54,11 @@ const MOVIES = [
 describe('App component', () => {
   it('renders correctly', () => {
     const component = renderer
-      .create(<App promoMovie={PROMO_MOVIE} movies={MOVIES} />)
+      .create(<App promoMovie={PROMO_MOVIE} movies={MOVIES} />, {
+        createNodeMock: () => {
+          return {};
+        },
+      })
       .toJSON();
 
     expect(component).toMatchSnapshot();
