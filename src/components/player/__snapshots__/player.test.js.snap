@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Player component renders correctly 1`] = `
+<video
+  className="player__video"
+  muted={true}
+  playsInline={true}
+  poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+  src="https://example.com/video.mp4"
+/>
+`;

@@ -6,17 +6,23 @@ const MOVIES = [
   {
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     thumbUrl: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
+    trailer: 'https://example.com/video.mp4',
   },
   {
     title: 'Bohemian Rhapsody',
     thumbUrl: 'img/bohemian-rhapsody.jpg',
+    trailer: 'https://example.com/video.mp4',
   },
 ];
 
 describe('MovieCard component', () => {
   it('renders correctly', () => {
     const component = renderer
-      .create(<MoviesList movies={MOVIES} onSelect={jest.fn()} />)
+      .create(<MoviesList movies={MOVIES} onSelect={jest.fn()} />, {
+        createNodeMock: () => {
+          return {};
+        },
+      })
       .toJSON();
 
     expect(component).toMatchSnapshot();

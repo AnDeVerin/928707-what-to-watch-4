@@ -7,16 +7,18 @@ exports[`MovieCard component renders correctly 1`] = `
   <article
     className="small-movie-card catalog__movies-card"
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
       onClick={[Function]}
     >
-      <img
-        alt="Fantastic Beasts: The Crimes of Grindelwald"
-        height="175"
-        src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-        width="280"
+      <video
+        className="player__video"
+        muted={true}
+        playsInline={true}
+        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+        src="https://example.com/video.mp4"
       />
     </div>
     <h3
@@ -34,16 +36,18 @@ exports[`MovieCard component renders correctly 1`] = `
   <article
     className="small-movie-card catalog__movies-card"
     onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
   >
     <div
       className="small-movie-card__image"
       onClick={[Function]}
     >
-      <img
-        alt="Bohemian Rhapsody"
-        height="175"
-        src="img/bohemian-rhapsody.jpg"
-        width="280"
+      <video
+        className="player__video"
+        muted={true}
+        playsInline={true}
+        poster="img/bohemian-rhapsody.jpg"
+        src="https://example.com/video.mp4"
       />
     </div>
     <h3

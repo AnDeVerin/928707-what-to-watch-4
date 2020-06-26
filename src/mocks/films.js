@@ -14,6 +14,7 @@ export const MOVIES = [
     realeseYear: 2018,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BYWVlMDI5N2UtZTIyMC00NjZkLWI5Y2QtODM5NGE5MzA0NmVjXkEyXkFqcGdeQXVyNzU3NjUxMzE@._V1_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BYTRiOTM4YzEtN2MwMC00MjMxLWIxM2ItMGE1YzA1MjNkN2YzXkEyXkFqcGdeQXVyNjQ4ODE4MzQ@._V1_SX1777_CR0,0,1777,999_AL_.jpg`,
+    trailer: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     overview: {
       rating: {
         value: 6.6,
@@ -33,6 +34,7 @@ export const MOVIES = [
     realeseYear: 2018,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BMTA2NDc3Njg5NDVeQTJeQWpwZ15BbWU4MDc1NDcxNTUz._V1_SY1000_CR0,0,674,1000_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BMTYwYzMwMGItZDkzOS00YTczLTg2MDAtNDA2MWY2YmU5NDZiXkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_.jpg`,
+    trailer: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     overview: {
       rating: {
         value: 8.5,
@@ -52,6 +54,7 @@ export const MOVIES = [
     realeseYear: 2015,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BNzgyNDczMjU4NV5BMl5BanBnXkFtZTgwMTUwMDI3NjE@._V1_SY1000_SX675_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BNjY4OTk1MWUtOTMxZC00NzJkLWIwZmUtNjMwZDcwMjBkMmI5XkEyXkFqcGdeQXVyNDAxOTExNTM@._V1_.jpg`,
+    trailer: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     overview: {
       rating: {
         value: 2.9,
@@ -71,6 +74,7 @@ export const MOVIES = [
     realeseYear: 2004,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BZTYzMjA2M2EtYmY1OC00ZWMxLThlY2YtZGI3MTQzOWM4YjE3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BYzI1OTQ3YTMtNjgwMC00NGU2LTkzM2ItYjMzOTQzZTBjNDc2XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SY1000_CR0,0,1530,1000_AL_.jpg`,
+    trailer: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     overview: {
       rating: {
         value: 10,
@@ -90,6 +94,7 @@ export const MOVIES = [
     realeseYear: 20011,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BMjE0NDE0MjYxNF5BMl5BanBnXkFtZTcwNjM2NTY5Ng@@._V1_SY1000_CR0,0,683,1000_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BMTA3MzQzOTk1MDVeQTJeQWpwZ15BbWU3MDEzNjc0MzY@._V1_SY1000_SX675_AL_.jpg`,
+    trailer: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     overview: {
       rating: {
         value: 5,
@@ -109,6 +114,7 @@ export const MOVIES = [
     realeseYear: 2011,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BMjE0NDE0MjYxNF5BMl5BanBnXkFtZTcwNjM2NTY5Ng@@._V1_SY1000_CR0,0,683,1000_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BMTA3MzQzOTk1MDVeQTJeQWpwZ15BbWU3MDEzNjc0MzY@._V1_SY1000_SX675_AL_.jpg`,
+    trailer: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     overview: {
       rating: {
         value: 5,
@@ -128,6 +134,7 @@ export const MOVIES = [
     realeseYear: 2001,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BMjE0NDE0MjYxNF5BMl5BanBnXkFtZTcwNjM2NTY5Ng@@._V1_SY1000_CR0,0,683,1000_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BMTA3MzQzOTk1MDVeQTJeQWpwZ15BbWU3MDEzNjc0MzY@._V1_SY1000_SX675_AL_.jpg`,
+    trailer: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     overview: {
       rating: {
         value: 5,
@@ -147,6 +154,7 @@ export const MOVIES = [
     realeseYear: 2011,
     posterUrl: `https://m.media-amazon.com/images/M/MV5BMjE0NDE0MjYxNF5BMl5BanBnXkFtZTcwNjM2NTY5Ng@@._V1_SY1000_CR0,0,683,1000_AL_.jpg`,
     coverUrl: `https://m.media-amazon.com/images/M/MV5BMTA3MzQzOTk1MDVeQTJeQWpwZ15BbWU3MDEzNjc0MzY@._V1_SY1000_SX675_AL_.jpg`,
+    trailer: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
     overview: {
       rating: {
         value: 5,
