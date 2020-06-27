@@ -17,6 +17,10 @@ export default class MovieCard extends PureComponent {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
+  componentWillUnmount() {
+    this.resetTimer();
+  }
+
   handleClick(e) {
     const { onClick, movie } = this.props;
 
