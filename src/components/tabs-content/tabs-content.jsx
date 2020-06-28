@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import getRating from '../../utils/rating-description.js';
+import getRating from '../../utils/get-rating-description.js';
 import ReviewCard from '../review-card/review-card.jsx';
 
 const TabsContent = ({ activeTab, movie }) => {
