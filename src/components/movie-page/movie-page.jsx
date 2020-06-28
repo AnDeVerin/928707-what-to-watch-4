@@ -1,6 +1,18 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
+import MoviesList from '../movies-list/movies-list.jsx';
+
+const filterMovies = ({ genre = 'all', movies = [], limit = 4 }) => {
+  const filteredMovies =
+    genre === `all`
+      ? movies.slice(0)
+      : movies.filter((m) => m.genre.toLowerCase() === genre.toLowerCase());
+
+  return filteredMovies.length <= limit
+    ? filteredMovies
+    : filteredMovies.slice(0, limit);
+};
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -8,8 +20,9 @@ class MoviePage extends PureComponent {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, movies, onMovieSelect } = this.props;
     const { title, genre, realeseYear, posterUrl, coverUrl } = movie;
+    const similarMovies = filterMovies({ genre, movies });
 
     return (
       <>
@@ -97,71 +110,7 @@ class MoviePage extends PureComponent {
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
 
-            <div className="catalog__movies-list">
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-                    alt="Fantastic Beasts: The Crimes of Grindelwald"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Fantastic Beasts: The Crimes of Grindelwald
-                  </a>
-                </h3>
-              </article>
-
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/bohemian-rhapsody.jpg"
-                    alt="Bohemian Rhapsody"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Bohemian Rhapsody
-                  </a>
-                </h3>
-              </article>
-
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/macbeth.jpg"
-                    alt="Macbeth"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Macbeth
-                  </a>
-                </h3>
-              </article>
-
-              <article className="small-movie-card catalog__movies-card">
-                <div className="small-movie-card__image">
-                  <img
-                    src="img/aviator.jpg"
-                    alt="Aviator"
-                    width="280"
-                    height="175"
-                  />
-                </div>
-                <h3 className="small-movie-card__title">
-                  <a className="small-movie-card__link" href="movie-page.html">
-                    Aviator
-                  </a>
-                </h3>
-              </article>
-            </div>
+            <MoviesList movies={similarMovies} onSelect={onMovieSelect} />
           </section>
 
           <footer className="page-footer">
@@ -193,6 +142,8 @@ MoviePage.propTypes = {
     coverUrl: PropTypes.string.isRequired,
     overview: PropTypes.object.isRequired,
   }).isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onMovieSelect: PropTypes.func.isRequired,
 };
 
 export default MoviePage;

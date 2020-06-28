@@ -25,7 +25,13 @@ class App extends PureComponent {
     const { selectedMovie } = this.state;
 
     if (selectedMovie) {
-      return <MoviePage movie={selectedMovie} />;
+      return (
+        <MoviePage
+          movie={selectedMovie}
+          movies={movies}
+          onMovieSelect={this.handleMovieSelect}
+        />
+      );
     }
 
     return (
@@ -38,6 +44,8 @@ class App extends PureComponent {
   }
 
   render() {
+    const { movies } = this.props;
+
     return (
       <BrowserRouter>
         <Switch>
@@ -45,7 +53,11 @@ class App extends PureComponent {
             {this._renderApp()}
           </Route>
           <Route exact path="/dev-movie">
-            <MoviePage movie={this.props.movies[0]} />
+            <MoviePage
+              movie={this.props.movies[0]}
+              movies={movies}
+              onMovieSelect={this.handleMovieSelect}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
