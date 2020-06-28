@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import getRating from '../../utils/rating-description.js';
+import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -8,11 +8,8 @@ class MoviePage extends PureComponent {
   }
 
   render() {
-    const {
-      movie: { title, genre, realeseYear, posterUrl, coverUrl, overview },
-    } = this.props;
-
-    const ratingLevel = getRating(overview.rating.value);
+    const { movie } = this.props;
+    const { title, genre, realeseYear, posterUrl, coverUrl } = movie;
 
     return (
       <>
@@ -91,53 +88,7 @@ class MoviePage extends PureComponent {
                 />
               </div>
 
-              <div className="movie-card__desc">
-                <nav className="movie-nav movie-card__nav">
-                  <ul className="movie-nav__list">
-                    <li className="movie-nav__item movie-nav__item--active">
-                      <a href="#" className="movie-nav__link">
-                        Overview
-                      </a>
-                    </li>
-                    <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">
-                        Details
-                      </a>
-                    </li>
-                    <li className="movie-nav__item">
-                      <a href="#" className="movie-nav__link">
-                        Reviews
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-
-                <div className="movie-rating">
-                  <div className="movie-rating__score">
-                    {overview.rating.value}
-                  </div>
-                  <p className="movie-rating__meta">
-                    <span className="movie-rating__level">{ratingLevel}</span>
-                    <span className="movie-rating__count">
-                      {overview.rating.count} ratings
-                    </span>
-                  </p>
-                </div>
-
-                <div className="movie-card__text">
-                  {overview.description.map((text, i) => (
-                    <p key={text[0] + i}>{text}</p>
-                  ))}
-
-                  <p className="movie-card__director">
-                    <strong>Director: {overview.director}</strong>
-                  </p>
-
-                  <p className="movie-card__starring">
-                    <strong>Starring: {overview.stars} and other</strong>
-                  </p>
-                </div>
-              </div>
+              <MovieTabs movie={movie} />
             </div>
           </div>
         </section>
@@ -240,15 +191,7 @@ MoviePage.propTypes = {
     realeseYear: PropTypes.number.isRequired,
     posterUrl: PropTypes.string.isRequired,
     coverUrl: PropTypes.string.isRequired,
-    overview: PropTypes.shape({
-      rating: PropTypes.shape({
-        value: PropTypes.number.isRequired,
-        count: PropTypes.number.isRequired,
-      }).isRequired,
-      description: PropTypes.arrayOf(PropTypes.string).isRequired,
-      director: PropTypes.string.isRequired,
-      stars: PropTypes.string.isRequired,
-    }).isRequired,
+    overview: PropTypes.object.isRequired,
   }).isRequired,
 };
 
