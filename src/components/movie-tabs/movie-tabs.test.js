@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MoviePage from './movie-page.jsx';
+import MovieTabs from './movie-tabs.jsx';
 
 const movie = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -74,20 +74,9 @@ const movie = {
   ],
 };
 
-describe(`MoviePage component`, () => {
-  it(`renders correctly`, () => {
-    const component = renderer
-      .create(
-        <MoviePage movie={movie} movies={[movie]} onMovieSelect={jest.fn()} />,
-        {
-          createNodeMock: () => {
-            return {
-              play: () => {},
-            };
-          },
-        }
-      )
-      .toJSON();
+describe('MovieTabs component', () => {
+  it('renders correctly', () => {
+    const component = renderer.create(<MovieTabs movie={movie} />).toJSON();
 
     expect(component).toMatchSnapshot();
   });

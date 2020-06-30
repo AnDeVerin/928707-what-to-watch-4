@@ -1,6 +1,10 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import MoviePage from './movie-page.jsx';
+import Adapter from 'enzyme-adapter-react-16';
+import { mount, configure } from 'enzyme';
+
+import MovieTabs from './movie-tabs.jsx';
+
+configure({ adapter: new Adapter() });
 
 const movie = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -74,21 +78,15 @@ const movie = {
   ],
 };
 
-describe(`MoviePage component`, () => {
-  it(`renders correctly`, () => {
-    const component = renderer
-      .create(
-        <MoviePage movie={movie} movies={[movie]} onMovieSelect={jest.fn()} />,
-        {
-          createNodeMock: () => {
-            return {
-              play: () => {},
-            };
-          },
-        }
-      )
-      .toJSON();
+describe('MovieTabs component', () => {
+  it(`changes state on tab click`, () => {
+    const component = mount(<MovieTabs movie={movie} />);
 
-    expect(component).toMatchSnapshot();
+    expect(component.instance().state.activeTab).toEqual(`overview`);
+
+    const tabLinks = component.find('.movie-nav__link');
+    tabLinks.at(1).simulate('click');
+
+    expect(component.instance().state.activeTab).toEqual(`details`);
   });
 });

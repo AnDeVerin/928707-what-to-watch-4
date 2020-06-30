@@ -1,4 +1,4 @@
-import getRatingDescription from './rating-description.js';
+import getRatingDescription from './get-rating-description.js';
 
 describe(`getRatingDescription function`, () => {
   describe.each`

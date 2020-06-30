@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MoviePage from './movie-page.jsx';
+import TabsContent from './tabs-content.jsx';
 
 const movie = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -74,19 +74,34 @@ const movie = {
   ],
 };
 
-describe(`MoviePage component`, () => {
-  it(`renders correctly`, () => {
+describe('TabsContent component', () => {
+  it('renders correctly on active tab Overview', () => {
     const component = renderer
-      .create(
-        <MoviePage movie={movie} movies={[movie]} onMovieSelect={jest.fn()} />,
-        {
-          createNodeMock: () => {
-            return {
-              play: () => {},
-            };
-          },
-        }
-      )
+      .create(<TabsContent movie={movie} activeTab={`overview`} />)
+      .toJSON();
+
+    expect(component).toMatchSnapshot();
+  });
+
+  it('renders correctly on active tab Details', () => {
+    const component = renderer
+      .create(<TabsContent movie={movie} activeTab={`details`} />)
+      .toJSON();
+
+    expect(component).toMatchSnapshot();
+  });
+
+  it('renders correctly on active tab Reviews', () => {
+    const component = renderer
+      .create(<TabsContent movie={movie} activeTab={`reviews`} />)
+      .toJSON();
+
+    expect(component).toMatchSnapshot();
+  });
+
+  it('renders nothing on unknown active tab', () => {
+    const component = renderer
+      .create(<TabsContent movie={movie} activeTab={`some unknown tab`} />)
       .toJSON();
 
     expect(component).toMatchSnapshot();
