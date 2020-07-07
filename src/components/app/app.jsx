@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Main from '../main/main.jsx';
 import MoviePage from '../movie-page/movie-page.jsx';
@@ -21,7 +22,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const { promoMovie, movies } = this.props;
+    const { promoMovie, movies, selectedGenre } = this.props;
     const { selectedMovie } = this.state;
 
     if (selectedMovie) {
@@ -39,6 +40,7 @@ class App extends PureComponent {
         promoMovie={promoMovie}
         movies={movies}
         onMovieSelect={this.handleMovieSelect}
+        selectedGenre={selectedGenre}
       />
     );
   }
@@ -65,6 +67,11 @@ class App extends PureComponent {
   }
 }
 
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+  selectedGenre: state.genre,
+});
+
 App.propTypes = {
   promoMovie: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -72,6 +79,8 @@ App.propTypes = {
     realeseYear: PropTypes.number.isRequired,
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  selectedGenre: PropTypes.string.isRequired,
 };
 
-export default App;
+export { App };
+export default connect(mapStateToProps)(App);
