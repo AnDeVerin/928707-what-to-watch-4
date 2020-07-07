@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MoviesList from './movies-list.jsx';
+import MovieList from './movie-list.jsx';
 
 const MOVIES = [
   {
@@ -18,7 +18,7 @@ const MOVIES = [
 describe('MovieCard component', () => {
   it('renders correctly', () => {
     const component = renderer
-      .create(<MoviesList movies={MOVIES} onSelect={jest.fn()} />, {
+      .create(<MovieList movies={MOVIES} onSelect={jest.fn()} />, {
         createNodeMock: () => {
           return {};
         },
