@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GenreList from '../genre-list/genre-list.jsx';
-import MovieList from '../movie-list/movie-list.jsx';
+import LimitedMovieList from '../limited-movie-list/limited-movie-list.jsx';
 import getMoviesByGenre from '../../utils/get-movie-by-genre.js';
 
 const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
@@ -85,16 +85,10 @@ const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
 
-          <MovieList
+          <LimitedMovieList
             movies={getMoviesByGenre(selectedGenre, movies)}
             onSelect={onMovieSelect}
           />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
         </section>
 
         <footer className="page-footer">
