@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LimitedMovieList component renders correctly 1`] = `
+<div
+  className="catalog__movies-list"
+>
+  <article
+    className="small-movie-card catalog__movies-card"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="small-movie-card__image"
+      onClick={[Function]}
+    >
+      <video
+        className="player__video"
+        muted={true}
+        playsInline={true}
+        poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+        src="https://example.com/video.mp4"
+      />
+    </div>
+    <h3
+      className="small-movie-card__title"
+      onClick={[Function]}
+    >
+      <a
+        className="small-movie-card__link"
+        href="movie-page.html"
+      >
+        Fantastic Beasts: The Crimes of Grindelwald
+      </a>
+    </h3>
+  </article>
+  <article
+    className="small-movie-card catalog__movies-card"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="small-movie-card__image"
+      onClick={[Function]}
+    >
+      <video
+        className="player__video"
+        muted={true}
+        playsInline={true}
+        poster="img/bohemian-rhapsody.jpg"
+        src="https://example.com/video.mp4"
+      />
+    </div>
+    <h3
+      className="small-movie-card__title"
+      onClick={[Function]}
+    >
+      <a
+        className="small-movie-card__link"
+        href="movie-page.html"
+      >
+        Bohemian Rhapsody
+      </a>
+    </h3>
+  </article>
+</div>
+`;
