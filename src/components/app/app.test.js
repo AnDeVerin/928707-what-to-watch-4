@@ -1,6 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App from './app.jsx';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { App } from './app.jsx';
+
+const mockStore = configureStore([]);
 
 const PROMO_MOVIE = {
   title: `The Grand Budapest Hotel`,
@@ -53,12 +57,26 @@ const MOVIES = [
 
 describe('App component', () => {
   it('renders correctly', () => {
+    const store = mockStore({
+      movies: MOVIES,
+      genre: `All genres`,
+    });
+
     const component = renderer
-      .create(<App promoMovie={PROMO_MOVIE} movies={MOVIES} />, {
-        createNodeMock: () => {
-          return {};
-        },
-      })
+      .create(
+        <Provider store={store}>
+          <App
+            promoMovie={PROMO_MOVIE}
+            movies={MOVIES}
+            selectedGenre="All genres"
+          />
+        </Provider>,
+        {
+          createNodeMock: () => {
+            return {};
+          },
+        }
+      )
       .toJSON();
 
     expect(component).toMatchSnapshot();

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from '../movie-card/movie-card.jsx';
 
-class MoviesList extends PureComponent {
+class MovieList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,9 +39,9 @@ class MoviesList extends PureComponent {
   }
 }
 
-MoviesList.propTypes = {
+MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 
-export default MoviesList;
+export default MovieList;

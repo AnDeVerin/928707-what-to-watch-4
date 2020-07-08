@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
-import MoviesList from '../movies-list/movies-list.jsx';
+import MovieList from '../movie-list/movie-list.jsx';
 
 const filterMovies = ({ genre = 'all', movies = [], limit = 4 }) => {
   const filteredMovies =
@@ -110,7 +110,7 @@ class MoviePage extends PureComponent {
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
 
-            <MoviesList movies={similarMovies} onSelect={onMovieSelect} />
+            <MovieList movies={similarMovies} onSelect={onMovieSelect} />
           </section>
 
           <footer className="page-footer">
