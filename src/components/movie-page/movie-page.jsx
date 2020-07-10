@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
 
+import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
+
+const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
+
+const tabItems = [`overview`, `details`, `reviews`];
+
 const filterMovies = ({ genre = 'all', movies = [], limit = 4 }) => {
   const filteredMovies =
     genre === `all`
@@ -96,7 +102,7 @@ const MoviePage = (props) => {
               />
             </div>
 
-            <MovieTabs movie={movie} />
+            <MovieTabsWithActiveItem movie={movie} items={tabItems} />
           </div>
         </div>
       </section>
