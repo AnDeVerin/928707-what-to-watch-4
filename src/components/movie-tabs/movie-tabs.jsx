@@ -1,41 +1,19 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TabsNav from '../tabs-nav/tabs-nav.jsx';
 import TabsContent from '../tabs-content/tabs-content.jsx';
 
-class MovieTabs extends PureComponent {
-  constructor(props) {
-    super(props);
+const MovieTabs = (props) => {
+  const { movie, items, activeItem, onClick } = props;
 
-    this._tabs = [`overview`, `details`, `reviews`];
+  return (
+    <div className="movie-card__desc">
+      <TabsNav tabs={items} activeTab={activeItem} onClick={onClick} />
 
-    this.state = {
-      activeTab: this._tabs[0],
-    };
-
-    this.handleTabClick = this.handleTabClick.bind(this);
-  }
-
-  handleTabClick(activeTab) {
-    this.setState({ activeTab });
-  }
-
-  render() {
-    const { movie } = this.props;
-
-    return (
-      <div className="movie-card__desc">
-        <TabsNav
-          tabs={this._tabs}
-          activeTab={this.state.activeTab}
-          onClick={this.handleTabClick}
-        />
-
-        <TabsContent activeTab={this.state.activeTab} movie={movie} />
-      </div>
-    );
-  }
-}
+      <TabsContent activeTab={activeItem} movie={movie} />
+    </div>
+  );
+};
 
 MovieTabs.propTypes = {
   movie: PropTypes.shape({
@@ -55,6 +33,9 @@ MovieTabs.propTypes = {
       stars: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     }).isRequired,
   }).isRequired,
+  items: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  activeItem: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default MovieTabs;

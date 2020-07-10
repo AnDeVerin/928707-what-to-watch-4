@@ -78,15 +78,31 @@ const movie = {
   ],
 };
 
+const items = [`overview`, `details`, `reviews`];
+
 describe('MovieTabs component', () => {
-  it(`changes state on tab click`, () => {
-    const component = mount(<MovieTabs movie={movie} />);
+  it(`change tab content on activeItem change`, () => {
+    const onClickMock = jest.fn();
 
-    expect(component.instance().state.activeTab).toEqual(`overview`);
+    const component = mount(
+      <MovieTabs
+        movie={movie}
+        items={items}
+        activeItem="overview"
+        onClick={onClickMock}
+      />
+    );
 
-    const tabLinks = component.find('.movie-nav__link');
-    tabLinks.at(1).simulate('click');
+    expect(component.find(`.movie-rating`).exists()).toEqual(true);
+    expect(component.find(`.movie-card__details-item`).at(0).exists()).toEqual(
+      false
+    );
 
-    expect(component.instance().state.activeTab).toEqual(`details`);
+    component.setProps({ activeItem: `details` });
+
+    expect(component.find(`.movie-rating`).exists()).toEqual(false);
+    expect(component.find(`.movie-card__details-item`).at(0).exists()).toEqual(
+      true
+    );
   });
 });
