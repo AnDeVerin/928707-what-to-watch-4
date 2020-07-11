@@ -1,43 +1,21 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from '../movie-card/movie-card.jsx';
+import withDelay from '../../hocs/with-delay/with-delay.js';
 
-class MovieList extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeMovie: this.props.movies[0] || {},
-    };
+const CardWithPlayDelay = withDelay(MovieCard);
 
-    this.handleCardHover = this.handleCardHover.bind(this);
-    this.handleCardClick = this.handleCardClick.bind(this);
-  }
-
-  handleCardHover(activeMovie) {
-    this.setState({ activeMovie });
-  }
-
-  handleCardClick(movie) {
-    this.props.onSelect(movie);
-  }
-
-  render() {
-    const { movies } = this.props;
-
-    return (
-      <div className="catalog__movies-list">
-        {movies.map((movie, i) => (
-          <MovieCard
-            key={`${movie.thumbUrl}-${i}`}
-            movie={movie}
-            onHover={this.handleCardHover}
-            onClick={this.handleCardClick}
-          />
-        ))}
-      </div>
-    );
-  }
-}
+const MovieList = ({ movies, onSelect }) => (
+  <div className="catalog__movies-list">
+    {movies.map((movie, i) => (
+      <CardWithPlayDelay
+        key={`${movie.thumbUrl}-${i}`}
+        movie={movie}
+        onClick={onSelect}
+      />
+    ))}
+  </div>
+);
 
 MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
