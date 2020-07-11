@@ -410,10 +410,13 @@ const movies = [
   },
 ];
 
+const selectedMovie = {};
+
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     genre: 'All genres',
     movies,
+    selectedMovie,
   });
 });
 
@@ -423,6 +426,7 @@ it(`Reducer should change genre to a given value`, () => {
       {
         genre: 'All genres',
         movies,
+        selectedMovie,
       },
       {
         type: ActionType.SET_GENRE,
@@ -432,6 +436,7 @@ it(`Reducer should change genre to a given value`, () => {
   ).toEqual({
     genre: `Drama`,
     movies,
+    selectedMovie,
   });
 
   expect(
@@ -439,6 +444,7 @@ it(`Reducer should change genre to a given value`, () => {
       {
         genre: 'All genres',
         movies,
+        selectedMovie,
       },
       {
         type: ActionType.SET_GENRE,
@@ -448,6 +454,25 @@ it(`Reducer should change genre to a given value`, () => {
   ).toEqual({
     genre: `Adventure`,
     movies,
+    selectedMovie,
+  });
+
+  expect(
+    reducer(
+      {
+        genre: 'All genres',
+        movies,
+        selectedMovie,
+      },
+      {
+        type: ActionType.SET_MOVIE,
+        payload: { title: `Title` },
+      }
+    )
+  ).toEqual({
+    genre: `All genres`,
+    movies,
+    selectedMovie: { title: `Title` },
   });
 });
 
@@ -456,6 +481,13 @@ describe(`Action creators work correctly`, () => {
     expect(ActionCreator.setGenre(`some genre`)).toEqual({
       type: ActionType.SET_GENRE,
       payload: `some genre`,
+    });
+  });
+
+  it(`Action creator for setting selected movie returns correct action`, () => {
+    expect(ActionCreator.setMovie({ title: `Title` })).toEqual({
+      type: ActionType.SET_MOVIE,
+      payload: { title: `Title` },
     });
   });
 });

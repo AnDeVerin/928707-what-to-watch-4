@@ -60,6 +60,7 @@ describe('App component', () => {
     const store = mockStore({
       movies: MOVIES,
       genre: `All genres`,
+      selectedMovie: {},
     });
 
     const component = renderer
@@ -69,6 +70,8 @@ describe('App component', () => {
             promoMovie={PROMO_MOVIE}
             movies={MOVIES}
             selectedGenre="All genres"
+            selectedMovie={{}}
+            onMovieSelect={jest.fn()}
           />
         </Provider>,
         {

@@ -1,36 +1,28 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { ActionCreator } from '../../reducer.js';
 import Main from '../main/main.jsx';
 import MoviePage from '../movie-page/movie-page.jsx';
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
+const App = (props) => {
+  const {
+    promoMovie,
+    movies,
+    selectedGenre,
+    selectedMovie,
+    onMovieSelect,
+  } = props;
 
-    this.state = {
-      selectedMovie: null,
-    };
-
-    this.handleMovieSelect = this.handleMovieSelect.bind(this);
-  }
-
-  handleMovieSelect(selectedMovie) {
-    this.setState({ selectedMovie });
-  }
-
-  _renderApp() {
-    const { promoMovie, movies, selectedGenre } = this.props;
-    const { selectedMovie } = this.state;
-
-    if (selectedMovie) {
+  const _renderApp = () => {
+    if (selectedMovie.title) {
       return (
         <MoviePage
           movie={selectedMovie}
           movies={movies}
-          onMovieSelect={this.handleMovieSelect}
+          onMovieSelect={onMovieSelect}
         />
       );
     }
@@ -39,37 +31,40 @@ class App extends PureComponent {
       <Main
         promoMovie={promoMovie}
         movies={movies}
-        onMovieSelect={this.handleMovieSelect}
+        onMovieSelect={onMovieSelect}
         selectedGenre={selectedGenre}
       />
     );
-  }
+  };
 
-  render() {
-    const { movies } = this.props;
-
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this._renderApp()}
-          </Route>
-          <Route exact path="/dev-movie">
-            <MoviePage
-              movie={this.props.movies[0]}
-              movies={movies}
-              onMovieSelect={this.handleMovieSelect}
-            />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          {_renderApp()}
+        </Route>
+        <Route exact path="/dev-movie">
+          <MoviePage
+            movie={props.movies[0]}
+            movies={movies}
+            onMovieSelect={onMovieSelect}
+          />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 const mapStateToProps = (state) => ({
   movies: state.movies,
   selectedGenre: state.genre,
+  selectedMovie: state.selectedMovie,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onMovieSelect(movie) {
+    dispatch(ActionCreator.setMovie(movie));
+  },
 });
 
 App.propTypes = {
@@ -80,7 +75,9 @@ App.propTypes = {
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   selectedGenre: PropTypes.string.isRequired,
+  selectedMovie: PropTypes.object.isRequired,
+  onMovieSelect: PropTypes.func.isRequired,
 };
 
 export { App };
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
