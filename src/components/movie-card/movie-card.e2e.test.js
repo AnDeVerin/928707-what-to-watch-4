@@ -13,25 +13,39 @@ const movie = {
 };
 
 describe('MovieCard component', () => {
-  it('calls passed function on card hover', () => {
-    const onHoverMock = jest.fn();
+  it('calls passed functions on card hover', () => {
+    const onMouseEnterMock = jest.fn();
+    const onMouseLeaveMock = jest.fn();
 
     const component = mount(
-      <MovieCard movie={movie} onHover={onHoverMock} onClick={jest.fn()} />
+      <MovieCard
+        movie={movie}
+        onClick={jest.fn()}
+        onMouseEnter={onMouseEnterMock}
+        onMouseLeave={onMouseLeaveMock}
+        isPlaying={false}
+      />
     );
 
     const movieCard = component.find('.small-movie-card');
     movieCard.simulate('mouseenter');
+    movieCard.simulate('mouseleave');
 
-    expect(onHoverMock).toHaveBeenCalled();
-    expect(onHoverMock).toHaveBeenCalledWith(movie);
+    expect(onMouseEnterMock).toHaveBeenCalled();
+    expect(onMouseLeaveMock).toHaveBeenCalled();
   });
 
   it('calls passed function on card title click', () => {
     const onClickMock = jest.fn();
 
     const component = mount(
-      <MovieCard movie={movie} onHover={jest.fn()} onClick={onClickMock} />
+      <MovieCard
+        movie={movie}
+        onClick={onClickMock}
+        onMouseEnter={jest.fn()}
+        onMouseLeave={jest.fn()}
+        isPlaying={false}
+      />
     );
 
     const movieCardTitle = component.find('.small-movie-card__link');
@@ -44,7 +58,13 @@ describe('MovieCard component', () => {
     const onClickMock = jest.fn();
 
     const component = mount(
-      <MovieCard movie={movie} onHover={jest.fn()} onClick={onClickMock} />
+      <MovieCard
+        movie={movie}
+        onClick={onClickMock}
+        onMouseEnter={jest.fn()}
+        onMouseLeave={jest.fn()}
+        isPlaying={false}
+      />
     );
 
     const movieCardImage = component.find('.small-movie-card__image');

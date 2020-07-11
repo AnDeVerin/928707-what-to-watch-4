@@ -1,8 +1,9 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
+import PropTypes from 'prop-types';
 
-import LimitedMovieList from './limited-movie-list.jsx';
+import withLimit from './with-limit.js';
 
 configure({ adapter: new Adapter() });
 
@@ -59,34 +60,65 @@ const MOVIES = [
   },
 ];
 
-describe('LimitedMovieList component', () => {
+const MockListComponent = ({ movies, onSelect }) => (
+  <ul>
+    {movies.map((movie, i) => (
+      <li className="card" key={i} onClick={() => onSelect(movie)}>
+        {movie.toString()}
+      </li>
+    ))}
+  </ul>
+);
+
+MockListComponent.propTypes = {
+  movies: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
+
+const Button = ({ onClick }) => <button onClick={onClick} />;
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
+
+const MockComponentWrapped = withLimit(MockListComponent);
+
+describe('withLimit component', () => {
   it(`shows button and 8 card on initialization`, () => {
     const component = mount(
-      <LimitedMovieList onSelect={jest.fn()} movies={MOVIES} />
+      <MockComponentWrapped
+        movies={MOVIES}
+        onSelect={jest.fn()}
+        button={Button}
+      />
     );
 
-    const cardsCount = component.find('.catalog__movies-card').length;
-    const moreButton = component.find('.catalog__button');
+    const cardsCount = component.find('.card').length;
+    const button = component.find('button');
 
     expect(cardsCount).toEqual(8);
-    expect(moreButton.exists()).toBeTruthy();
+    expect(button.exists()).toBeTruthy();
   });
 
   it(`hides button if no more cards to show`, () => {
     const component = mount(
-      <LimitedMovieList onSelect={jest.fn()} movies={MOVIES} />
+      <MockComponentWrapped
+        movies={MOVIES}
+        onSelect={jest.fn()}
+        button={Button}
+      />
     );
 
-    let cardsCount = component.find('.catalog__movies-card').length;
-    let moreButton = component.find('.catalog__button');
+    let cardsCount = component.find('.card').length;
+    let button = component.find('button');
     expect(cardsCount).toEqual(8);
-    expect(moreButton.exists()).toBeTruthy();
+    expect(button.exists()).toBeTruthy();
 
-    moreButton.simulate('click');
+    button.simulate('click');
 
-    cardsCount = component.find('.catalog__movies-card').length;
-    moreButton = component.find('.catalog__button');
+    cardsCount = component.find('.card').length;
+    button = component.find('button');
     expect(cardsCount).toEqual(10);
-    expect(moreButton.exists()).toBeFalsy();
+    expect(button.exists()).toBeFalsy();
   });
 });

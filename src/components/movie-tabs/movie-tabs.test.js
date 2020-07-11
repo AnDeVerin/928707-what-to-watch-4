@@ -74,9 +74,20 @@ const movie = {
   ],
 };
 
+const items = [`overview`, `details`, `reviews`];
+
 describe('MovieTabs component', () => {
   it('renders correctly', () => {
-    const component = renderer.create(<MovieTabs movie={movie} />).toJSON();
+    const component = renderer
+      .create(
+        <MovieTabs
+          movie={movie}
+          items={items}
+          activeItem="overview"
+          onClick={jest.fn()}
+        />
+      )
+      .toJSON();
 
     expect(component).toMatchSnapshot();
   });

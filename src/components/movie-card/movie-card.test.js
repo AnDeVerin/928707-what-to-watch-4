@@ -12,7 +12,13 @@ describe('MovieCard component', () => {
   it('renders correctly', () => {
     const component = renderer
       .create(
-        <MovieCard movie={movie} onHover={jest.fn()} onClick={jest.fn()} />,
+        <MovieCard
+          movie={movie}
+          onClick={jest.fn()}
+          onMouseEnter={jest.fn()}
+          onMouseLeave={jest.fn()}
+          isPlaying={false}
+        />,
         {
           createNodeMock: () => {
             return {};

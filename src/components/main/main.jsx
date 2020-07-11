@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import GenreList from '../genre-list/genre-list.jsx';
-import LimitedMovieList from '../limited-movie-list/limited-movie-list.jsx';
+import withLimit from '../../hocs/with-limit/with-limit.js';
+import MovieList from '../movie-list/movie-list.jsx';
+import CatalogButton from '../catalog-button/catalog-button.jsx';
 import getMoviesByGenre from '../../utils/get-movie-by-genre.js';
+
+const LimitedMovieList = withLimit(MovieList);
 
 const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
   const { title, genre, realeseYear } = promoMovie;
@@ -88,6 +93,7 @@ const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
           <LimitedMovieList
             movies={getMoviesByGenre(selectedGenre, movies)}
             onSelect={onMovieSelect}
+            button={CatalogButton}
           />
         </section>
 
