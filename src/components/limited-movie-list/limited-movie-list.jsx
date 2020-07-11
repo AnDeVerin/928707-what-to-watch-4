@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { MOVIE_LIST_COUNT as LIMIT } from '../../constants.js';
 
 import MovieList from '../movie-list/movie-list.jsx';
+import CatalogButton from '../catalog-button/catalog-button.jsx';
 
 class LimitedMovieList extends PureComponent {
   constructor(props) {
@@ -47,17 +48,7 @@ class LimitedMovieList extends PureComponent {
           movies={movies.slice(0, shownMoviesCount)}
         />
 
-        {isButtonVisible && (
-          <div className="catalog__more">
-            <button
-              className="catalog__button"
-              type="button"
-              onClick={this.handleClick}
-            >
-              Show more
-            </button>
-          </div>
-        )}
+        {isButtonVisible && <CatalogButton onClick={this.handleClick} />}
       </>
     );
   }
