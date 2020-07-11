@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withDelay is rendered correctly 1`] = `
+<div
+  isPlaying={false}
+  movie={
+    Object {
+      "thumbUrl": "img/aviator.jpg",
+      "title": "Aviator",
+      "trailer": "https://example.com/video.mp4",
+    }
+  }
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+/>
+`;
