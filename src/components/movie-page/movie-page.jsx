@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
+import Header from '../header/header.jsx';
 
 import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
@@ -41,26 +42,7 @@ const MoviePage = (props) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header movie-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width="63"
-                  height="63"
-                />
-              </div>
-            </div>
-          </header>
+          <Header />
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
