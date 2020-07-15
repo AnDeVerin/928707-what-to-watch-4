@@ -70,7 +70,13 @@ const movies = [
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     movies: [],
-    promo: { title: '', genre: '', realeseYear: 0 },
+    promo: {
+      title: '',
+      genre: '',
+      realeseYear: 0,
+      coverUrl: '',
+      posterUrl: '',
+    },
   });
 });
 
@@ -103,6 +109,22 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.LOAD_MOVIES,
         payload: movies,
+      });
+    });
+  });
+
+  it(`Should make a correct API call to /films/promo`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const promoLoader = Operation.loadPromo();
+
+    apiMock.onGet(`/films/promo`).reply(200, movieFromServer);
+
+    return promoLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.LOAD_PROMO,
+        payload: movies[0],
       });
     });
   });

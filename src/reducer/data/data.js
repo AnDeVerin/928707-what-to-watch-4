@@ -3,7 +3,7 @@ import { createMoviesData } from '../../adapters/movies.js';
 
 const initialState = {
   movies: [],
-  promo: { title: '', genre: '', realeseYear: 0 },
+  promo: { title: '', genre: '', realeseYear: 0, posterUrl: '', coverUrl: '' },
 };
 
 const ActionType = {
