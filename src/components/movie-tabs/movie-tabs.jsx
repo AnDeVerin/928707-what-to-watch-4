@@ -28,7 +28,7 @@ MovieTabs.propTypes = {
         value: PropTypes.number.isRequired,
         count: PropTypes.number.isRequired,
       }).isRequired,
-      description: PropTypes.arrayOf(PropTypes.string).isRequired,
+      description: PropTypes.string.isRequired,
       director: PropTypes.string.isRequired,
       stars: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     }).isRequired,

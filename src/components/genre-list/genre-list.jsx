@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { ActionCreator } from '../../reducer.js';
+import { ActionCreator } from '../../reducer/app/app.js';
+import { getMovies } from '../../reducer/data/selectors.js';
+import { getSelectedGenre } from '../../reducer/app/selectors.js';
 
 const GenreList = ({ activeGenre, movies, onGenreSelect }) => {
   const uniqGenres = new Set(movies.map((movie) => movie.genre));
@@ -37,8 +39,8 @@ const GenreList = ({ activeGenre, movies, onGenreSelect }) => {
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: state.genre,
-  movies: state.movies,
+  activeGenre: getSelectedGenre(state),
+  movies: getMovies(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

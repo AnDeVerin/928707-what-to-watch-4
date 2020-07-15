@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import GenreList from '../genre-list/genre-list.jsx';
 import withLimit from '../../hocs/with-limit/with-limit.js';
 import MovieList from '../movie-list/movie-list.jsx';
 import CatalogButton from '../catalog-button/catalog-button.jsx';
-import getMoviesByGenre from '../../utils/get-movie-by-genre.js';
+
+import { ActionCreator } from '../../reducer/app/app.js';
+import { getMoviesByGenre, getPromo } from '../../reducer/data/selectors.js';
 
 const LimitedMovieList = withLimit(MovieList);
 
-const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
+const Main = ({ movies, promoMovie, onMovieSelect }) => {
   const { title, genre, realeseYear } = promoMovie;
 
   return (
@@ -91,7 +94,7 @@ const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
           <GenreList />
 
           <LimitedMovieList
-            movies={getMoviesByGenre(selectedGenre, movies)}
+            movies={movies}
             onSelect={onMovieSelect}
             button={CatalogButton}
           />
@@ -115,6 +118,17 @@ const Main = ({ promoMovie, movies, onMovieSelect, selectedGenre }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  movies: getMoviesByGenre(state),
+  promoMovie: getPromo(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onMovieSelect(movie) {
+    dispatch(ActionCreator.setMovie(movie));
+  },
+});
+
 Main.propTypes = {
   promoMovie: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -123,7 +137,7 @@ Main.propTypes = {
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   onMovieSelect: PropTypes.func.isRequired,
-  selectedGenre: PropTypes.string.isRequired,
 };
 
-export default Main;
+export { Main };
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

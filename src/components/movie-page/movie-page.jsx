@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
 
 import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
+import { ActionCreator } from '../../reducer/app/app.js';
+import { getMovies } from '../../reducer/data/selectors.js';
+import { getSelectedMovie } from '../../reducer/app/selectors.js';
+
 const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
 
 const tabItems = [`overview`, `details`, `reviews`];
 
-const filterMovies = ({ genre = 'all', movies = [], limit = 4 }) => {
+const filterMovies = ({ genre = 'All genres', movies = [], limit = 4 }) => {
   const filteredMovies =
-    genre === `all`
+    genre === `All genres`
       ? movies.slice(0)
       : movies.filter((m) => m.genre.toLowerCase() === genre.toLowerCase());
 
@@ -124,13 +130,24 @@ const MoviePage = (props) => {
           </div>
 
           <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
+            <p>© 2020 What to watch Ltd.</p>
           </div>
         </footer>
       </div>
     </>
   );
 };
+
+const mapStateToProps = (state) => ({
+  movie: getSelectedMovie(state),
+  movies: getMovies(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onMovieSelect(movie) {
+    dispatch(ActionCreator.setMovie(movie));
+  },
+});
 
 MoviePage.propTypes = {
   movie: PropTypes.shape({
@@ -146,4 +163,5 @@ MoviePage.propTypes = {
   onMovieSelect: PropTypes.func.isRequired,
 };
 
-export default MoviePage;
+export { MoviePage };
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
