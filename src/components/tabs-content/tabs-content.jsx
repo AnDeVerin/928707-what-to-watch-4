@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import getRating from '../../utils/get-rating-description.js';
 import ReviewCard from '../review-card/review-card.jsx';
+import formatTime from '../../utils/formatTime.js';
 
 const TabsContent = ({ activeTab, movie }) => {
   const { overview, reviews } = movie;
@@ -24,9 +25,7 @@ const TabsContent = ({ activeTab, movie }) => {
           </div>
 
           <div className="movie-card__text">
-            {overview.description.map((text, i) => (
-              <p key={text[0] + i}>{text}</p>
-            ))}
+            <p>{overview.description}</p>
 
             <p className="movie-card__director">
               <strong>Director: {overview.director}</strong>
@@ -65,7 +64,7 @@ const TabsContent = ({ activeTab, movie }) => {
             <p className="movie-card__details-item">
               <strong className="movie-card__details-name">Run Time</strong>
               <span className="movie-card__details-value">
-                {overview.runTime}
+                {formatTime(overview.runTime)}
               </span>
             </p>
             <p className="movie-card__details-item">
@@ -129,10 +128,10 @@ TabsContent.propTypes = {
         value: PropTypes.number.isRequired,
         count: PropTypes.number.isRequired,
       }).isRequired,
-      description: PropTypes.arrayOf(PropTypes.string).isRequired,
+      description: PropTypes.string.isRequired,
       director: PropTypes.string.isRequired,
       stars: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-      runTime: PropTypes.string.isRequired,
+      runTime: PropTypes.number.isRequired,
     }).isRequired,
     reviews: PropTypes.array.isRequired,
   }).isRequired,

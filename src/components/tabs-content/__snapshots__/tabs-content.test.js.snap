@@ -104,7 +104,7 @@ exports[`TabsContent component renders correctly on active tab Details 1`] = `
       <span
         className="movie-card__details-value"
       >
-        2h 14min
+        2h 14m
       </span>
     </p>
     <p
