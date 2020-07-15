@@ -3,6 +3,30 @@
 exports[`App component renders correctly 1`] = `
 Array [
   <section
+    className="modal visually-hidden"
+  >
+    <div
+      className="modal__content"
+    >
+      <h2
+        className="modal__heading"
+      >
+        Something went wrong!
+      </h2>
+      <p
+        className="modal__text"
+      >
+        Some error
+      </p>
+      <button
+        className="modal__button catalog__button"
+        onClick={[Function]}
+      >
+        OK
+      </button>
+    </div>
+  </section>,
+  <section
     className="movie-card"
   >
     <div

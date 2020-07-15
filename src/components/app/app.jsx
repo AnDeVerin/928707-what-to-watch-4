@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Main from '../main/main.jsx';
 import MoviePage from '../movie-page/movie-page.jsx';
+import Modal from '../modal/modal.jsx';
 
 import { getSelectedMovie } from '../../reducer/app/selectors.js';
 
@@ -20,20 +21,24 @@ const App = (props) => {
   };
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          {_renderApp()}
-        </Route>
-        <Route exact path="/dev-movie">
-          {/* <MoviePage
+    <>
+      <Modal />
+
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {_renderApp()}
+          </Route>
+          <Route exact path="/dev-movie">
+            {/* <MoviePage
             movie={movies[0]}
             movies={movies}
             onMovieSelect={onMovieSelect}
           /> */}
-        </Route>
-      </Switch>
-    </BrowserRouter>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 };
 

@@ -68,6 +68,8 @@ describe('App component', () => {
       },
       [NameSpace.APP]: {
         genre: `All genres`,
+        isModalVisible: false,
+        errorText: `Some error`,
       },
     });
 
