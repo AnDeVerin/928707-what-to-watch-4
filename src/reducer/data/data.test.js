@@ -70,6 +70,7 @@ const movies = [
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     movies: [],
+    promo: { title: '', genre: '', realeseYear: 0 },
   });
 });
 

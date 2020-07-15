@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { App } from './app.jsx';
+import NameSpace from '../../reducer/name-space.js';
 
 const mockStore = configureStore([]);
 
@@ -58,21 +59,19 @@ const MOVIES = [
 describe('App component', () => {
   it('renders correctly', () => {
     const store = mockStore({
-      movies: MOVIES,
-      genre: `All genres`,
-      selectedMovie: {},
+      [NameSpace.DATA]: {
+        movies: MOVIES,
+        promo: PROMO_MOVIE,
+      },
+      [NameSpace.APP]: {
+        genre: `All genres`,
+      },
     });
 
     const component = renderer
       .create(
         <Provider store={store}>
-          <App
-            promoMovie={PROMO_MOVIE}
-            movies={MOVIES}
-            selectedGenre="All genres"
-            selectedMovie={{}}
-            onMovieSelect={jest.fn()}
-          />
+          <App selectedMovie={{}} />
         </Provider>,
         {
           createNodeMock: () => {

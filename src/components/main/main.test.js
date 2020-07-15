@@ -2,7 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import Main from './main.jsx';
+import { Main } from './main.jsx';
+import NameSpace from '../../reducer/name-space.js';
 
 const mockStore = configureStore([]);
 
@@ -28,8 +29,12 @@ const MOVIES = [
 describe('Main component', () => {
   it('renders correctly', () => {
     const store = mockStore({
-      movies: MOVIES,
-      genre: `All genres`,
+      [NameSpace.DATA]: {
+        movies: MOVIES,
+      },
+      [NameSpace.APP]: {
+        genre: `All genres`,
+      },
     });
 
     const component = renderer
@@ -39,7 +44,6 @@ describe('Main component', () => {
             promoMovie={PROMO_MOVIE}
             movies={MOVIES}
             onMovieSelect={jest.fn()}
-            selectedGenre="All genres"
           />
         </Provider>,
         {
