@@ -1,9 +1,7 @@
-import { extend } from './utils/extend.js';
-import { MOVIES } from './mocks/films.js';
+import { extend } from '../../utils/extend.js';
 
 const initialState = {
   genre: 'All genres',
-  movies: MOVIES,
   selectedMovie: {},
 };
 
