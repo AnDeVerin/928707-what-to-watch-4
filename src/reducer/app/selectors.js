@@ -7,3 +7,11 @@ export const getSelectedGenre = (state) => {
 export const getSelectedMovie = (state) => {
   return state[NameSpace.APP].selectedMovie;
 };
+
+export const getModalState = (state) => {
+  return state[NameSpace.APP].isModalVisible;
+};
+
+export const getErrorText = (state) => {
+  return state[NameSpace.APP].errorText;
+};
