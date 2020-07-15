@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal component renders correctly 1`] = `
+<section
+  className="modal "
+>
+  <div
+    className="modal__content"
+  >
+    <h2
+      className="modal__heading"
+    >
+      Something went wrong!
+    </h2>
+    <p
+      className="modal__text"
+    >
+      Some error
+    </p>
+    <button
+      className="modal__button catalog__button"
+      onClick={[MockFunction]}
+    >
+      OK
+    </button>
+  </div>
+</section>
+`;
