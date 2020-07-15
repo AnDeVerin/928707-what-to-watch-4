@@ -3,6 +3,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { createAPI } from '../../api.js';
 import { reducer, ActionType, Operation } from './data.js';
+import { ActionType as AppActionType } from '../app/app.js';
 
 const api = createAPI(() => {});
 
@@ -125,6 +126,46 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.LOAD_PROMO,
         payload: movies[0],
+      });
+    });
+  });
+
+  it(`Should set error and show modal on network error to /films`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const moviesLoader = Operation.loadMovies();
+
+    apiMock.onGet(`/films`).networkError();
+
+    return moviesLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: AppActionType.SET_ERROR_TEXT,
+        payload: `Error: Network Error`,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: AppActionType.SHOW_MODAL,
+        payload: null,
+      });
+    });
+  });
+
+  it(`Should set error and show modal on network error to /films/promo`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const promoLoader = Operation.loadPromo();
+
+    apiMock.onGet(`/films/promo`).networkError();
+
+    return promoLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: AppActionType.SET_ERROR_TEXT,
+        payload: `Error: Network Error`,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: AppActionType.SHOW_MODAL,
+        payload: null,
       });
     });
   });

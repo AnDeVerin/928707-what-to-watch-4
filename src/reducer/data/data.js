@@ -1,5 +1,6 @@
 import { extend } from '../../utils/extend.js';
 import { createMoviesData } from '../../adapters/movies.js';
+import { ActionCreator as AppActionCreator } from '../app/app.js';
 
 const initialState = {
   movies: [],
@@ -25,15 +26,27 @@ const ActionCreator = {
 
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
-    return api.get(`/films`).then((response) => {
-      dispatch(ActionCreator.loadMovies(response.data));
-    });
+    return api
+      .get(`/films`)
+      .then((response) => {
+        dispatch(ActionCreator.loadMovies(response.data));
+      })
+      .catch((err) => {
+        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(AppActionCreator.showModal());
+      });
   },
 
   loadPromo: () => (dispatch, getState, api) => {
-    return api.get(`/films/promo`).then((response) => {
-      dispatch(ActionCreator.loadPromo(response.data));
-    });
+    return api
+      .get(`/films/promo`)
+      .then((response) => {
+        dispatch(ActionCreator.loadPromo(response.data));
+      })
+      .catch((err) => {
+        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(AppActionCreator.showModal());
+      });
   },
 };
 
