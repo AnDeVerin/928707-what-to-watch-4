@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header component renders correctly 1`] = `
+exports[`Header component renders correctly for authenticated user 1`] = `
 <header
   className="page-header movie-card__head"
 >
@@ -40,6 +40,46 @@ exports[`Header component renders correctly 1`] = `
         width="63"
       />
     </div>
+  </div>
+</header>
+`;
+
+exports[`Header component renders correctly for unauthenticated user 1`] = `
+<header
+  className="page-header movie-card__head"
+>
+  <div
+    className="logo"
+  >
+    <a
+      className="logo__link"
+    >
+      <span
+        className="logo__letter logo__letter--1"
+      >
+        W
+      </span>
+      <span
+        className="logo__letter logo__letter--2"
+      >
+        T
+      </span>
+      <span
+        className="logo__letter logo__letter--3"
+      >
+        W
+      </span>
+    </a>
+  </div>
+  <div
+    className="user-block"
+  >
+    <a
+      className="user-block__link"
+      href="sign-in.html"
+    >
+      Sign in
+    </a>
   </div>
 </header>
 `;
