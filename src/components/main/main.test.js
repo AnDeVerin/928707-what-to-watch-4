@@ -2,8 +2,9 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { Main } from './main.jsx';
+import { AuthorizationStatus } from '../../reducer/user/user.js';
 import NameSpace from '../../reducer/name-space.js';
+import { Main } from './main.jsx';
 
 const mockStore = configureStore([]);
 
@@ -37,6 +38,9 @@ describe('Main component', () => {
       },
       [NameSpace.APP]: {
         genre: `All genres`,
+      },
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.AUTH,
       },
     });
 

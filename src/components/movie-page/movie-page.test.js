@@ -1,6 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { AuthorizationStatus } from '../../reducer/user/user.js';
+import NameSpace from '../../reducer/name-space.js';
 import { MoviePage } from './movie-page.jsx';
+
+const mockStore = configureStore([]);
 
 const movie = {
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -75,9 +81,17 @@ const movie = {
 
 describe(`MoviePage component`, () => {
   it(`renders correctly`, () => {
+    const store = mockStore({
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+      },
+    });
+
     const component = renderer
       .create(
-        <MoviePage movie={movie} movies={[movie]} onMovieSelect={jest.fn()} />,
+        <Provider store={store}>
+          <MoviePage movie={movie} movies={[movie]} onMovieSelect={jest.fn()} />
+        </Provider>,
         {
           createNodeMock: () => {
             return {

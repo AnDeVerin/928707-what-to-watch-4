@@ -2,8 +2,9 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { App } from './app.jsx';
+import { AuthorizationStatus } from '../../reducer/user/user.js';
 import NameSpace from '../../reducer/name-space.js';
+import { App } from './app.jsx';
 
 const mockStore = configureStore([]);
 
@@ -71,12 +72,19 @@ describe('App component', () => {
         isModalVisible: false,
         errorText: `Some error`,
       },
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+      },
     });
 
     const component = renderer
       .create(
         <Provider store={store}>
-          <App selectedMovie={{}} />
+          <App
+            selectedMovie={{}}
+            authStatus={AuthorizationStatus.AUTH}
+            login={jest.fn()}
+          />
         </Provider>,
         {
           createNodeMock: () => {

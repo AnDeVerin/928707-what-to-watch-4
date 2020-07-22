@@ -1,6 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { AuthorizationStatus } from '../../reducer/user/user.js';
+import NameSpace from '../../reducer/name-space.js';
 import Promo from './promo.jsx';
+
+const mockStore = configureStore([]);
 
 const promoMovie = {
   coverUrl: `https://htmlacademy-react-3.appspot.com/wtw/static/film/background/ones_upon_a_time_in_america.jpg`,
@@ -13,8 +19,18 @@ const promoMovie = {
 
 describe('Promo component', () => {
   it('renders correctly', () => {
+    const store = mockStore({
+      [NameSpace.USER]: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+      },
+    });
+
     const component = renderer
-      .create(<Promo promoMovie={promoMovie} />)
+      .create(
+        <Provider store={store}>
+          <Promo promoMovie={promoMovie} />
+        </Provider>
+      )
       .toJSON();
 
     expect(component).toMatchSnapshot();
