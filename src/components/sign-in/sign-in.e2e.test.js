@@ -1,6 +1,8 @@
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import { mount, configure } from 'enzyme';
+import { Router } from 'react-router-dom';
+import history from '../../history.js';
 
 import SignIn from './sign-in.jsx';
 
@@ -10,7 +12,11 @@ describe('SignIn component', () => {
   it(`calls passed function on submit with correct values`, () => {
     const onSubmitMock = jest.fn();
 
-    const component = mount(<SignIn onSubmit={onSubmitMock} />);
+    const component = mount(
+      <Router history={history}>
+        <SignIn onSubmit={onSubmitMock} />
+      </Router>
+    );
 
     component
       .find(`.sign-in__input[type='email']`)
