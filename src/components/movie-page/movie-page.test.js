@@ -2,6 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { Router } from 'react-router-dom';
+import history from '../../history.js';
 import { AuthorizationStatus } from '../../reducer/user/user.js';
 import NameSpace from '../../reducer/name-space.js';
 import { MoviePage } from './movie-page.jsx';
@@ -90,7 +92,13 @@ describe(`MoviePage component`, () => {
     const component = renderer
       .create(
         <Provider store={store}>
-          <MoviePage movie={movie} movies={[movie]} onMovieSelect={jest.fn()} />
+          <Router history={history}>
+            <MoviePage
+              movie={movie}
+              movies={[movie]}
+              onMovieSelect={jest.fn()}
+            />
+          </Router>
         </Provider>,
         {
           createNodeMock: () => {
