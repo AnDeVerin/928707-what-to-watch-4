@@ -1,59 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Main from '../main/main.jsx';
-import MoviePage from '../movie-page/movie-page.jsx';
+// import MoviePage from '../movie-page/movie-page.jsx';
 import Modal from '../modal/modal.jsx';
 import SignIn from '../sign-in/sign-in.jsx';
+import MyList from '../my-list/my-list.jsx';
 
 import { getSelectedMovie } from '../../reducer/app/selectors.js';
 import { getAuthStatus } from '../../reducer/user/selectors.js';
 
-import {
-  Operation as UserOperation,
-  AuthorizationStatus,
-} from '../../reducer/user/user.js';
+import { AppRoute } from '../../constants.js';
+import history from '../../history.js';
+import PrivateRoute from '../private-route/private-route.jsx';
 
-const isGuest = (status) => status === AuthorizationStatus.NO_AUTH;
+import { Operation as UserOperation } from '../../reducer/user/user.js';
 
 const App = (props) => {
-  const { selectedMovie, authStatus, login } = props;
-
-  const _renderApp = () => {
-    if (isGuest(authStatus)) {
-      return <SignIn onSubmit={login} />;
-    } else {
-      if (selectedMovie.title) {
-        return <MoviePage />;
-      }
-
-      return <Main />;
-    }
-  };
+  const { login } = props;
 
   return (
     <>
       <Modal />
 
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
-          <Route exact path="/">
-            {_renderApp()}
+          <Route exact path={AppRoute.MAIN}>
+            <Main />
           </Route>
-          <Route exact path="/dev-movie">
-            {/* <MoviePage
-            movie={movies[0]}
-            movies={movies}
-            onMovieSelect={onMovieSelect}
-          /> */}
+
+          <Route exact path={AppRoute.LOGIN}>
+            <SignIn onSubmit={login} />
           </Route>
-          <Route exact path="/dev-signin">
-            <SignIn onSubmit={() => {}} />
-          </Route>
+
+          <PrivateRoute
+            exact
+            path={AppRoute.MYLIST}
+            render={() => {
+              return <MyList />;
+            }}
+          />
         </Switch>
-      </BrowserRouter>
+      </Router>
     </>
   );
 };
