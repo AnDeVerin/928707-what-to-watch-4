@@ -68,6 +68,38 @@ const movies = [
   },
 ];
 
+const updatedMovie = {
+  backgroundColor: '#ffffff',
+  coverUrl: 'img/the-grand-budapest-hotel-bg.jpg',
+  genre: 'Comedy',
+  id: 1,
+  isFavourite: true,
+  overview: {
+    description:
+      "In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
+    director: 'Wes Andreson',
+    rating: {
+      count: 240,
+      value: 8.9,
+    },
+    runTime: 99,
+    stars: [
+      'Bill Murray',
+      'Edward Norton',
+      'Jude Law',
+      'Willem Dafoe',
+      'Saoirse Ronan',
+    ],
+  },
+  posterUrl: 'img/the-grand-budapest-hotel-poster.jpg',
+  realeseYear: 2014,
+  reviews: [],
+  thumbUrl: 'img/the-grand-budapest-hotel.jpg',
+  title: 'The Grand Budapest Hotel',
+  trailer: 'https://some-link',
+  videoUrl: 'https://some-link',
+};
+
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     movies: [],
@@ -77,6 +109,8 @@ it(`Reducer without additional parameters should return initial state`, () => {
       realeseYear: 0,
       coverUrl: '',
       posterUrl: '',
+      id: 0,
+      isFavourite: false,
     },
   });
 });
@@ -94,6 +128,24 @@ it(`Reducer should update questions by load questions`, () => {
     )
   ).toEqual({
     movies,
+  });
+});
+
+it(`Reducer should update movies by changing isFavourite field`, () => {
+  expect(
+    reducer(
+      {
+        movies,
+        promo: movies[0],
+      },
+      {
+        type: ActionType.UPDATE_MOVIES,
+        payload: updatedMovie,
+      }
+    )
+  ).toEqual({
+    movies: [updatedMovie],
+    promo: updatedMovie,
   });
 });
 
@@ -125,6 +177,25 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.LOAD_PROMO,
+        payload: movies[0],
+      });
+    });
+  });
+
+  it(`Should make a correct API call to /favorite/:id/:value`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const toggler = Operation.onFavouriteToggle({
+      id: 1,
+      isFavourite: true,
+    });
+
+    apiMock.onPost(`/favorite/1/0`).reply(200, movieFromServer);
+
+    return toggler(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.UPDATE_MOVIES,
         payload: movies[0],
       });
     });
