@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Main from '../main/main.jsx';
 // import MoviePage from '../movie-page/movie-page.jsx';
@@ -31,9 +32,13 @@ const App = (props) => {
             <Main />
           </Route>
 
-          <Route exact path={AppRoute.LOGIN}>
-            <SignIn onSubmit={login} />
-          </Route>
+          <Route
+            exact
+            path={AppRoute.LOGIN}
+            render={({ location }) => (
+              <SignIn onSubmit={login} location={location} />
+            )}
+          />
 
           <PrivateRoute
             exact
@@ -41,6 +46,19 @@ const App = (props) => {
             render={() => {
               return <MyList />;
             }}
+          />
+
+          <Route
+            render={() => (
+              <>
+                <h1>
+                  404.
+                  <br />
+                  <small>Page not found</small>
+                </h1>
+                <Link to="/">Go to main page</Link>
+              </>
+            )}
           />
         </Switch>
       </Router>
@@ -54,9 +72,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login(authData) {
-    dispatch(UserOperation.login(authData));
-  },
+  login: (authData) => dispatch(UserOperation.login(authData)),
 });
 
 App.propTypes = {
