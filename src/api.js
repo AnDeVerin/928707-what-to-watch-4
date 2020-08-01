@@ -1,8 +1,5 @@
 import axios from 'axios';
-
-const Error = {
-  UNAUTHORIZED: 401,
-};
+import { Error } from './constants.js';
 
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
@@ -23,7 +20,7 @@ export const createAPI = (onUnauthorized) => {
 
       // Бросаем ошибку, потому что нам важно прервать цепочку промисов после запроса авторизации.
       // Запрос авторизации - это особый случай и важно дать понять приложению, что запрос был неудачным.
-      throw err;
+      throw Error.UNAUTHORIZED;
     }
 
     throw err;

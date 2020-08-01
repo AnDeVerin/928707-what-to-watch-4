@@ -6,22 +6,11 @@ import { Router } from 'react-router-dom';
 import history from '../../history.js';
 import { AuthorizationStatus } from '../../reducer/user/user.js';
 import NameSpace from '../../reducer/name-space.js';
-import Promo from './promo.jsx';
+import MyList from './my-list.jsx';
 
 const mockStore = configureStore([]);
 
-const promoMovie = {
-  id: 1,
-  coverUrl: `https://htmlacademy-react-3.appspot.com/wtw/static/film/background/ones_upon_a_time_in_america.jpg`,
-  genre: `Crime`,
-  posterUrl: `https://htmlacademy-react-3.appspot.com/wtw/static/film/poster/Once_Upon_a_Time_in_America.jpg`,
-  realeseYear: 1984,
-  thumbUrl: `https://htmlacademy-react-3.appspot.com/wtw/static/film/preview/Once_Upon_a_Time_in_America.jpg`,
-  title: `Once Upon a Time in America`,
-  isFavourite: false,
-};
-
-describe('Promo component', () => {
+describe('MyList component', () => {
   it('renders correctly', () => {
     const store = mockStore({
       [NameSpace.USER]: {
@@ -33,7 +22,7 @@ describe('Promo component', () => {
       .create(
         <Provider store={store}>
           <Router history={history}>
-            <Promo promoMovie={promoMovie} onAdd={jest.fn()} />
+            <MyList />
           </Router>
         </Provider>
       )

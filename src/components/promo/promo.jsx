@@ -2,9 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '../header/header.jsx';
+import { Link } from 'react-router-dom';
 
-const Promo = ({ promoMovie }) => {
-  const { title, genre, realeseYear, posterUrl, coverUrl } = promoMovie;
+const Promo = ({ promoMovie, onAdd }) => {
+  const {
+    id,
+    title,
+    genre,
+    realeseYear,
+    posterUrl,
+    coverUrl,
+    isFavourite,
+  } = promoMovie;
 
   return (
     <section className="movie-card">
@@ -35,7 +44,8 @@ const Promo = ({ promoMovie }) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button
+              <Link
+                to={`/player/${id}`}
                 className="btn btn--play movie-card__button"
                 type="button"
               >
@@ -43,15 +53,28 @@ const Promo = ({ promoMovie }) => {
                   <use xlinkHref="#play-s" />
                 </svg>
                 <span>Play</span>
-              </button>
+              </Link>
+
               <button
+                onClick={() => onAdd({ id, isFavourite })}
                 className="btn btn--list movie-card__button"
                 type="button"
               >
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add" />
-                </svg>
-                <span>My list</span>
+                {isFavourite ? (
+                  <>
+                    <svg viewBox="0 0 18 14" width="18" height="14">
+                      <use xlinkHref="#in-list" />
+                    </svg>
+                    <span>My list</span>
+                  </>
+                ) : (
+                  <>
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add" />
+                    </svg>
+                    <span>My list</span>
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -63,12 +86,15 @@ const Promo = ({ promoMovie }) => {
 
 Promo.propTypes = {
   promoMovie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     realeseYear: PropTypes.number.isRequired,
     posterUrl: PropTypes.string.isRequired,
     coverUrl: PropTypes.string.isRequired,
+    isFavourite: PropTypes.bool.isRequired,
   }).isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
 
 export default Promo;
