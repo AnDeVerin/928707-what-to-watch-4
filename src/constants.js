@@ -6,7 +6,8 @@ export const Error = {
 };
 
 export const AppRoute = {
-  MAIN: '/',
-  LOGIN: '/login',
-  MYLIST: '/my-list',
+  MAIN: `/`,
+  LOGIN: `/login`,
+  MYLIST: `/my-list`,
+  PLAYER: '/player/:filmId?',
 };
