@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '../header/header.jsx';
+import { Link } from 'react-router-dom';
 
 const Promo = ({ promoMovie, onAdd }) => {
   const {
@@ -43,7 +44,8 @@ const Promo = ({ promoMovie, onAdd }) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button
+              <Link
+                to={`/player/${id}`}
                 className="btn btn--play movie-card__button"
                 type="button"
               >
@@ -51,7 +53,7 @@ const Promo = ({ promoMovie, onAdd }) => {
                   <use xlinkHref="#play-s" />
                 </svg>
                 <span>Play</span>
-              </button>
+              </Link>
 
               <button
                 onClick={() => onAdd({ id, isFavourite })}
