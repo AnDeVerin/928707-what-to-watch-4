@@ -4,7 +4,7 @@ import { Router, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Main from '../main/main.jsx';
-// import MoviePage from '../movie-page/movie-page.jsx';
+import MoviePage from '../movie-page/movie-page.jsx';
 import Modal from '../modal/modal.jsx';
 import SignIn from '../sign-in/sign-in.jsx';
 import MyList from '../my-list/my-list.jsx';
@@ -41,10 +41,16 @@ const App = (props) => {
             )}
           />
 
+          <PrivateRoute
+            exact
+            path={AppRoute.MYLIST}
+            render={() => <MyList />}
+          />
+
           <Route
             exact
             path={AppRoute.PLAYER}
-            render={({ match }) => (
+            render={({ match, location }) => (
               <PlayerPage
                 match={match}
                 getMovie={getMovie}
@@ -53,12 +59,13 @@ const App = (props) => {
             )}
           />
 
-          <PrivateRoute
+          <Route
             exact
-            path={AppRoute.MYLIST}
-            render={() => <MyList />}
+            path={AppRoute.FILM}
+            render={({ location }) => <MoviePage location={location} />}
           />
 
+          {/* 404 */}
           <Route
             render={() => (
               <>

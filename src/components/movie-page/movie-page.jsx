@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+// import history from '../../history.js';
 
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
@@ -16,11 +19,13 @@ const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
 
 const tabItems = [`overview`, `details`, `reviews`];
 
-const filterMovies = ({ genre = 'All genres', movies = [], limit = 4 }) => {
+const filterMovies = ({ genre = 'All genres', movies = [], limit = 4, id }) => {
   const filteredMovies =
     genre === `All genres`
       ? movies.slice(0)
-      : movies.filter((m) => m.genre.toLowerCase() === genre.toLowerCase());
+      : movies.filter(
+          (m) => m.genre.toLowerCase() === genre.toLowerCase() && m.id !== id
+        );
 
   return filteredMovies.length <= limit
     ? filteredMovies
@@ -28,9 +33,9 @@ const filterMovies = ({ genre = 'All genres', movies = [], limit = 4 }) => {
 };
 
 const MoviePage = (props) => {
-  const { movie, movies, onMovieSelect } = props;
-  const { title, genre, realeseYear, posterUrl, coverUrl } = movie;
-  const similarMovies = filterMovies({ genre, movies });
+  const { movie, movies, onMovieSelect, location } = props;
+  const { title, genre, realeseYear, posterUrl, coverUrl, id } = movie;
+  const similarMovies = filterMovies({ genre, movies, id });
 
   return (
     <>
@@ -53,24 +58,27 @@ const MoviePage = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button
+                <Link
+                  to={{ pathname: `/player/${id}`, state: { from: location } }}
                   className="btn btn--play movie-card__button"
                   type="button"
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
+                    <use xlinkHref="#play-s" />
                   </svg>
                   <span>Play</span>
-                </button>
+                </Link>
+
                 <button
                   className="btn btn--list movie-card__button"
                   type="button"
                 >
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref="#add" />
                   </svg>
                   <span>My list</span>
                 </button>
+
                 <a href="add-review.html" className="btn movie-card__button">
                   Add review
                 </a>
@@ -140,9 +148,11 @@ MoviePage.propTypes = {
     posterUrl: PropTypes.string.isRequired,
     coverUrl: PropTypes.string.isRequired,
     overview: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   onMovieSelect: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export { MoviePage };

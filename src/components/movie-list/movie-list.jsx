@@ -7,12 +7,8 @@ const CardWithPlayDelay = withDelay(MovieCard);
 
 const MovieList = ({ movies, onSelect }) => (
   <div className="catalog__movies-list">
-    {movies.map((movie, i) => (
-      <CardWithPlayDelay
-        key={`${movie.thumbUrl}-${i}`}
-        movie={movie}
-        onClick={onSelect}
-      />
+    {movies.map((movie) => (
+      <CardWithPlayDelay key={movie.id} movie={movie} onClick={onSelect} />
     ))}
   </div>
 );
