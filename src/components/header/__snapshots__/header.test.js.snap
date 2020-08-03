@@ -43,7 +43,7 @@ exports[`Header component renders correctly for authenticated user 1`] = `
           alt="User avatar"
           height="63"
           src="https://4.react.pages.academy/wtw/static/avatar/5.jpg"
-          title="user@mail.com"
+          title="Go to my list"
           width="63"
         />
       </div>

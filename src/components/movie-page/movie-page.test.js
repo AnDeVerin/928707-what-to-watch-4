@@ -108,6 +108,7 @@ describe(`MoviePage component`, () => {
               movies={[movie]}
               onFavouriteToggle={jest.fn()}
               getMovie={() => movie}
+              authStatus={AuthorizationStatus.AUTH}
             />
           </Router>
         </Provider>

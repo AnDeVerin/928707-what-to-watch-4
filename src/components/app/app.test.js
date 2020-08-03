@@ -98,6 +98,7 @@ describe('App component', () => {
             authStatus={AuthorizationStatus.AUTH}
             login={jest.fn()}
             getMovie={jest.fn()}
+            postReview={jest.fn()}
           />
         </Provider>,
         {

@@ -117,6 +117,7 @@ describe('MoviePage component', () => {
             movies={[movie]}
             onFavouriteToggle={onToggleMock}
             getMovie={() => movie}
+            authStatus={AuthorizationStatus.AUTH}
           />
         </Router>
       </Provider>
