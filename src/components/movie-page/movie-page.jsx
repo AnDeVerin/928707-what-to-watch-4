@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-// import history from '../../history.js';
-
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
 import Header from '../header/header.jsx';
@@ -13,6 +11,8 @@ import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
 import { Operation as DataOperation } from '../../reducer/data/data.js';
 import { getMovies, getMovieById } from '../../reducer/data/selectors.js';
+import { AuthorizationStatus } from '../../reducer/user/user.js';
+import { getAuthStatus } from '../../reducer/user/selectors.js';
 
 const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
 
@@ -32,8 +32,16 @@ const filterMovies = ({ genre = 'All genres', movies = [], limit = 4, id }) => {
 };
 
 const MoviePage = (props) => {
-  const { match, location, movies, onFavouriteToggle, getMovie } = props;
+  const {
+    match,
+    location,
+    movies,
+    onFavouriteToggle,
+    getMovie,
+    authStatus,
+  } = props;
 
+  const isUser = authStatus === AuthorizationStatus.AUTH;
   const filmId = Number.parseInt(match.params.id, 10);
   const movie = getMovie(filmId);
 
@@ -107,9 +115,17 @@ const MoviePage = (props) => {
                   )}
                 </button>
 
-                <a href="add-review.html" className="btn movie-card__button">
-                  Add review
-                </a>
+                {isUser && (
+                  <Link
+                    to={{
+                      pathname: `/films/${id}/review`,
+                      state: { from: location },
+                    }}
+                    className="btn movie-card__button"
+                  >
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -159,6 +175,7 @@ const MoviePage = (props) => {
 const mapStateToProps = (state) => ({
   movies: getMovies(state),
   getMovie: (id) => getMovieById(state, id),
+  authStatus: getAuthStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -173,6 +190,7 @@ MoviePage.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   onFavouriteToggle: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
 
 export { MoviePage };

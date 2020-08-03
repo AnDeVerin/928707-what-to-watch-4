@@ -21,6 +21,7 @@ const ActionType = {
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
   UPDATE_MOVIES: `UPDATE_MOVIES`,
+  POST_REVIEW: `POST_REVIEW`,
 };
 
 const ActionCreator = {
@@ -48,7 +49,9 @@ const Operation = {
         dispatch(ActionCreator.loadMovies(response.data));
       })
       .catch((err) => {
-        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
         dispatch(AppActionCreator.showModal());
       });
   },
@@ -60,7 +63,9 @@ const Operation = {
         dispatch(ActionCreator.loadPromo(response.data));
       })
       .catch((err) => {
-        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
         dispatch(AppActionCreator.showModal());
       });
   },
@@ -77,8 +82,31 @@ const Operation = {
           return;
         }
 
-        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
         dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  postReview: ({ id, rating, comment }) => (dispatch, getState, api) => {
+    return api
+      .post(`/comments/${id}`, { rating, comment })
+      .then(() => {
+        history.push(`/films/${id}`);
+      })
+      .catch((err) => {
+        if (err === Error.UNAUTHORIZED) {
+          history.push(AppRoute.LOGIN);
+          return;
+        }
+
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+
+        throw err;
       });
   },
 };
