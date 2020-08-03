@@ -25,18 +25,14 @@ class SignIn extends PureComponent {
     onSubmit({
       email: this.emailRef.current.value,
       password: this.passwordRef.current.value,
-    })
-      .then(() => {
-        if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-          return;
-        }
+    }).then(() => {
+      if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+        return;
+      }
 
-        const { from } = location.state || { from: { pathname: '/' } };
-        history.replace(from);
-      })
-      .catch(() => {
-        /* TODO: show errors on login */
-      });
+      const { from } = location.state || { from: { pathname: '/' } };
+      history.replace(from);
+    });
   }
 
   render() {
