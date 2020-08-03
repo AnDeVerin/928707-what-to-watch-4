@@ -11,9 +11,8 @@ import Header from '../header/header.jsx';
 
 import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
-import { ActionCreator } from '../../reducer/app/app.js';
-import { getMovies } from '../../reducer/data/selectors.js';
-import { getSelectedMovie } from '../../reducer/app/selectors.js';
+import { Operation as DataOperation } from '../../reducer/data/data.js';
+import { getMovies, getMovieById } from '../../reducer/data/selectors.js';
 
 const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
 
@@ -33,8 +32,25 @@ const filterMovies = ({ genre = 'All genres', movies = [], limit = 4, id }) => {
 };
 
 const MoviePage = (props) => {
-  const { movie, movies, onMovieSelect, location } = props;
-  const { title, genre, realeseYear, posterUrl, coverUrl, id } = movie;
+  const { match, location, movies, onFavouriteToggle, getMovie } = props;
+
+  const filmId = Number.parseInt(match.params.id, 10);
+  const movie = getMovie(filmId);
+
+  if (!movie) {
+    return <section className="movie-card movie-card--full" />;
+  }
+
+  const {
+    title,
+    genre,
+    realeseYear,
+    posterUrl,
+    coverUrl,
+    id,
+    isFavourite,
+  } = movie;
+
   const similarMovies = filterMovies({ genre, movies, id });
 
   return (
@@ -70,13 +86,25 @@ const MoviePage = (props) => {
                 </Link>
 
                 <button
+                  onClick={() => onFavouriteToggle({ id, isFavourite })}
                   className="btn btn--list movie-card__button"
                   type="button"
                 >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
+                  {isFavourite ? (
+                    <>
+                      <svg viewBox="0 0 18 14" width="18" height="14">
+                        <use xlinkHref="#in-list" />
+                      </svg>
+                      <span>My list</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add" />
+                      </svg>
+                      <span>My list</span>
+                    </>
+                  )}
                 </button>
 
                 <a href="add-review.html" className="btn movie-card__button">
@@ -107,7 +135,7 @@ const MoviePage = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MovieList movies={similarMovies} onSelect={onMovieSelect} />
+          <MovieList movies={similarMovies} />
         </section>
 
         <footer className="page-footer">
@@ -129,30 +157,22 @@ const MoviePage = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  movie: getSelectedMovie(state),
   movies: getMovies(state),
+  getMovie: (id) => getMovieById(state, id),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onMovieSelect(movie) {
-    dispatch(ActionCreator.setMovie(movie));
+  onFavouriteToggle({ id, isFavourite }) {
+    dispatch(DataOperation.onFavouriteToggle({ id, isFavourite }));
   },
 });
 
 MoviePage.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    thumbUrl: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    realeseYear: PropTypes.number.isRequired,
-    posterUrl: PropTypes.string.isRequired,
-    coverUrl: PropTypes.string.isRequired,
-    overview: PropTypes.object.isRequired,
-    id: PropTypes.number.isRequired,
-  }).isRequired,
-  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onMovieSelect: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onFavouriteToggle: PropTypes.func.isRequired,
+  getMovie: PropTypes.func.isRequired,
 };
 
 export { MoviePage };
