@@ -9,6 +9,7 @@ import Modal from '../modal/modal.jsx';
 import SignIn from '../sign-in/sign-in.jsx';
 import MyList from '../my-list/my-list.jsx';
 import PlayerPage from '../player-page/player-page.jsx';
+import withVideo from '../../hocs/with-video/with-video.js';
 
 import { getAuthStatus } from '../../reducer/user/selectors.js';
 import { getMovieById } from '../../reducer/data/selectors.js';
@@ -18,6 +19,8 @@ import history from '../../history.js';
 import PrivateRoute from '../private-route/private-route.jsx';
 
 import { Operation as UserOperation } from '../../reducer/user/user.js';
+
+const FullScreenPlayer = withVideo(PlayerPage);
 
 const App = (props) => {
   const { login, getMovie } = props;
@@ -50,7 +53,7 @@ const App = (props) => {
             exact
             path={AppRoute.PLAYER}
             render={({ match, location }) => (
-              <PlayerPage
+              <FullScreenPlayer
                 match={match}
                 getMovie={getMovie}
                 location={location}
