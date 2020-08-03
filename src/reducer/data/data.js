@@ -39,6 +39,11 @@ const ActionCreator = {
     type: ActionType.UPDATE_MOVIES,
     payload: createMoviesData([movie])[0],
   }),
+
+  postReview: () => ({
+    type: ActionType.POST_REVIEW,
+    payload: null,
+  }),
 };
 
 const Operation = {
@@ -70,9 +75,9 @@ const Operation = {
       });
   },
 
-  onFavouriteToggle: ({ id, isFavourite }) => (dispatch, getState, api) => {
+  toggleFavorite: ({ id, isFavorite }) => (dispatch, getState, api) => {
     return api
-      .post(`/favorite/${id}/${isFavourite ? 0 : 1}`)
+      .post(`/favorite/${id}/${isFavorite ? 0 : 1}`)
       .then((response) => {
         dispatch(ActionCreator.updateMovies(response.data));
       })
@@ -93,6 +98,7 @@ const Operation = {
     return api
       .post(`/comments/${id}`, { rating, comment })
       .then(() => {
+        dispatch(ActionCreator.postReview());
         history.push(`/films/${id}`);
       })
       .catch((err) => {
@@ -118,6 +124,9 @@ const reducer = (state = initialState, action) => {
 
     case ActionType.LOAD_PROMO:
       return extend(state, { promo: action.payload });
+
+    case ActionType.POST_REVIEW:
+      return state;
 
     case ActionType.UPDATE_MOVIES:
       const movie = action.payload;

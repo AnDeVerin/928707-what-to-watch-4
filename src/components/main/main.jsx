@@ -13,10 +13,10 @@ import { Operation as DataOperation } from '../../reducer/data/data.js';
 
 const LimitedMovieList = withLimit(MovieList);
 
-const Main = ({ movies, promoMovie, onFavouriteToggle }) => {
+const Main = ({ movies, promoMovie, onFavoriteToggle }) => {
   return (
     <>
-      <Promo promoMovie={promoMovie} onFavouriteToggle={onFavouriteToggle} />
+      <Promo promoMovie={promoMovie} onFavoriteToggle={onFavoriteToggle} />
 
       <div className="page-content">
         <section className="catalog">
@@ -50,8 +50,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFavouriteToggle({ id, isFavourite }) {
-    dispatch(DataOperation.onFavouriteToggle({ id, isFavourite }));
+  onFavoriteToggle({ id, isFavourite }) {
+    dispatch(DataOperation.toggleFavorite({ id, isFavourite }));
   },
 });
 
@@ -62,7 +62,7 @@ Main.propTypes = {
     realeseYear: PropTypes.number.isRequired,
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onFavouriteToggle: PropTypes.func.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
 };
 
 export { Main };

@@ -115,7 +115,7 @@ describe('MoviePage component', () => {
             match={{ params: { id: 1 } }}
             location={{}}
             movies={[movie]}
-            onFavouriteToggle={onToggleMock}
+            onFavoriteToggle={onToggleMock}
             getMovie={() => movie}
             authStatus={AuthorizationStatus.AUTH}
           />

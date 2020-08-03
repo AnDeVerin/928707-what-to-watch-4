@@ -149,6 +149,40 @@ it(`Reducer should update movies by changing isFavourite field`, () => {
   });
 });
 
+it(`Reducer should not change state on Review post`, () => {
+  expect(
+    reducer(
+      {
+        movies: [],
+        promo: {
+          title: '',
+          genre: '',
+          realeseYear: 0,
+          coverUrl: '',
+          posterUrl: '',
+          id: 0,
+          isFavourite: false,
+        },
+      },
+      {
+        type: ActionType.POST_REVIEW,
+        payload: null,
+      }
+    )
+  ).toEqual({
+    movies: [],
+    promo: {
+      title: '',
+      genre: '',
+      realeseYear: 0,
+      coverUrl: '',
+      posterUrl: '',
+      id: 0,
+      isFavourite: false,
+    },
+  });
+});
+
 describe(`Operation work correctly`, () => {
   it(`Should make a correct API call to /films`, function () {
     const apiMock = new MockAdapter(api);
@@ -185,9 +219,9 @@ describe(`Operation work correctly`, () => {
   it(`Should make a correct API call to /favorite/:id/:value`, function () {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const toggler = Operation.onFavouriteToggle({
+    const toggler = Operation.toggleFavorite({
       id: 1,
-      isFavourite: true,
+      isFavorite: true,
     });
 
     apiMock.onPost(`/favorite/1/0`).reply(200, movieFromServer);
@@ -197,6 +231,26 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.UPDATE_MOVIES,
         payload: movies[0],
+      });
+    });
+  });
+
+  it(`Should make a correct API call to /comments/:id`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const poster = Operation.postReview({
+      id: 1,
+      rating: 5,
+      comment: 'comment',
+    });
+
+    apiMock.onPost(`/comments/1`).reply(200, {});
+
+    return poster(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.POST_REVIEW,
+        payload: null,
       });
     });
   });

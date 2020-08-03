@@ -106,7 +106,7 @@ describe(`MoviePage component`, () => {
               match={{ params: { id: 1 } }}
               location={{}}
               movies={[movie]}
-              onFavouriteToggle={jest.fn()}
+              onFavoriteToggle={jest.fn()}
               getMovie={() => movie}
               authStatus={AuthorizationStatus.AUTH}
             />

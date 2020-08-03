@@ -36,7 +36,7 @@ const MoviePage = (props) => {
     match,
     location,
     movies,
-    onFavouriteToggle,
+    onFavoriteToggle,
     getMovie,
     authStatus,
   } = props;
@@ -94,7 +94,7 @@ const MoviePage = (props) => {
                 </Link>
 
                 <button
-                  onClick={() => onFavouriteToggle({ id, isFavourite })}
+                  onClick={() => onFavoriteToggle({ id, isFavourite })}
                   className="btn btn--list movie-card__button"
                   type="button"
                 >
@@ -179,8 +179,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFavouriteToggle({ id, isFavourite }) {
-    dispatch(DataOperation.onFavouriteToggle({ id, isFavourite }));
+  onFavoriteToggle({ id, isFavourite }) {
+    dispatch(DataOperation.toggleFavorite({ id, isFavourite }));
   },
 });
 
@@ -188,7 +188,7 @@ MoviePage.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onFavouriteToggle: PropTypes.func.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
   authStatus: PropTypes.string.isRequired,
 };

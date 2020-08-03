@@ -67,7 +67,7 @@ describe('Main component', () => {
               promoMovie={PROMO_MOVIE}
               movies={MOVIES}
               onMovieSelect={jest.fn()}
-              onFavouriteToggle={jest.fn()}
+              onFavoriteToggle={jest.fn()}
             />
           </Router>
         </Provider>,
