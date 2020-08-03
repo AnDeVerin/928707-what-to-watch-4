@@ -198,7 +198,6 @@ Array [
           >
             <video
               className="player__video"
-              muted={true}
               playsInline={true}
               poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
               src="https://example.com/video.mp4"
@@ -227,7 +226,6 @@ Array [
           >
             <video
               className="player__video"
-              muted={true}
               playsInline={true}
               poster="img/bohemian-rhapsody.jpg"
               src="https://example.com/video.mp4"
