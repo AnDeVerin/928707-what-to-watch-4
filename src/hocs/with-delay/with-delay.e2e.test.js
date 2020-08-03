@@ -8,6 +8,7 @@ import withDelay from './with-delay.js';
 configure({ adapter: new Adapter() });
 
 const movie = {
+  id: 1,
   title: 'Aviator',
   thumbUrl: 'img/aviator.jpg',
   trailer: 'https://example.com/video.mp4',
@@ -16,10 +17,10 @@ const movie = {
 const MockComponent = (props) => (
   <div
     className="child"
-    {...props}
     onClick={props.onClick}
     onMouseEnter={props.onMouseEnter}
     onMouseLeave={props.onMouseLeave}
+    disabled={props.isPlaying}
   />
 );
 
