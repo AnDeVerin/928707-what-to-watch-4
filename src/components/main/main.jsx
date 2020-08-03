@@ -8,28 +8,22 @@ import MovieList from '../movie-list/movie-list.jsx';
 import CatalogButton from '../catalog-button/catalog-button.jsx';
 import Promo from '../promo/promo.jsx';
 
-import { ActionCreator } from '../../reducer/app/app.js';
 import { getMoviesByGenre, getPromo } from '../../reducer/data/selectors.js';
-
 import { Operation as DataOperation } from '../../reducer/data/data.js';
 
 const LimitedMovieList = withLimit(MovieList);
 
-const Main = ({ movies, promoMovie, onMovieSelect, onFavouriteToggle }) => {
+const Main = ({ movies, promoMovie, onFavouriteToggle }) => {
   return (
     <>
-      <Promo promoMovie={promoMovie} onAdd={onFavouriteToggle} />
+      <Promo promoMovie={promoMovie} onFavouriteToggle={onFavouriteToggle} />
 
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenreList />
 
-          <LimitedMovieList
-            movies={movies}
-            onSelect={onMovieSelect}
-            button={CatalogButton}
-          />
+          <LimitedMovieList movies={movies} button={CatalogButton} />
         </section>
 
         <footer className="page-footer">
@@ -56,9 +50,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onMovieSelect(movie) {
-    dispatch(ActionCreator.setMovie(movie));
-  },
   onFavouriteToggle({ id, isFavourite }) {
     dispatch(DataOperation.onFavouriteToggle({ id, isFavourite }));
   },
@@ -71,7 +62,6 @@ Main.propTypes = {
     realeseYear: PropTypes.number.isRequired,
   }).isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onMovieSelect: PropTypes.func.isRequired,
   onFavouriteToggle: PropTypes.func.isRequired,
 };
 

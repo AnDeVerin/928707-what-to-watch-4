@@ -5,21 +5,16 @@ import withDelay from '../../hocs/with-delay/with-delay.js';
 
 const CardWithPlayDelay = withDelay(MovieCard);
 
-const MovieList = ({ movies, onSelect }) => (
+const MovieList = ({ movies }) => (
   <div className="catalog__movies-list">
-    {movies.map((movie, i) => (
-      <CardWithPlayDelay
-        key={`${movie.thumbUrl}-${i}`}
-        movie={movie}
-        onClick={onSelect}
-      />
+    {movies.map((movie) => (
+      <CardWithPlayDelay key={movie.id} movie={movie} />
     ))}
   </div>
 );
 
 MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
-  onSelect: PropTypes.func.isRequired,
 };
 
 export default MovieList;

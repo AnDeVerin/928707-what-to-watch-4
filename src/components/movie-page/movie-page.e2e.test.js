@@ -1,16 +1,21 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { configure, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { Router } from 'react-router-dom';
+import Adapter from 'enzyme-adapter-react-16';
+
 import history from '../../history.js';
 import { AuthorizationStatus } from '../../reducer/user/user.js';
 import NameSpace from '../../reducer/name-space.js';
 import { MoviePage } from './movie-page.jsx';
 
+configure({ adapter: new Adapter() });
 const mockStore = configureStore([]);
 
 const movie = {
+  id: 1,
+  isFavourite: false,
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
   thumbUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Adventure`,
@@ -81,30 +86,39 @@ const movie = {
   ],
 };
 
-describe(`MoviePage component`, () => {
-  it(`renders correctly`, () => {
+describe('MoviePage component', () => {
+  it(`Should call passed function on Add to my list button click`, () => {
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
       },
+      [NameSpace.DATA]: {
+        movies: [movie],
+      },
     });
 
-    const component = renderer
-      .create(
-        <Provider store={store}>
-          <Router history={history}>
-            <MoviePage
-              match={{ params: { id: 1 } }}
-              location={{}}
-              movies={[movie]}
-              onFavouriteToggle={jest.fn()}
-              getMovie={() => movie}
-            />
-          </Router>
-        </Provider>
-      )
-      .toJSON();
+    const onToggleMock = jest.fn();
 
-    expect(component).toMatchSnapshot();
+    const component = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <MoviePage
+            match={{ params: { id: 1 } }}
+            location={{}}
+            movies={[movie]}
+            onFavouriteToggle={onToggleMock}
+            getMovie={() => movie}
+          />
+        </Router>
+      </Provider>
+    );
+
+    component.find('.btn--list').simulate('click');
+
+    expect(onToggleMock).toHaveBeenCalledTimes(1);
+    expect(onToggleMock).toHaveBeenCalledWith({
+      id: 1,
+      isFavourite: false,
+    });
   });
 });

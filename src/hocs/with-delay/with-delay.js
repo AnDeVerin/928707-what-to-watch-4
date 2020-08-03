@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { DELAY } from '../../constants.js';
 
+import history from '../../history.js';
+
 const withDelay = (Component) => {
   class WithDelay extends PureComponent {
     constructor(props) {
@@ -19,10 +21,10 @@ const withDelay = (Component) => {
     }
 
     handleClick(e) {
-      const { onClick, movie } = this.props;
+      const { movie } = this.props;
 
       e.preventDefault();
-      onClick(movie);
+      history.push(`/films/${movie.id}`);
     }
 
     handleMouseEnter() {
@@ -66,8 +68,8 @@ const withDelay = (Component) => {
       title: PropTypes.string.isRequired,
       thumbUrl: PropTypes.string.isRequired,
       trailer: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
     }).isRequired,
-    onClick: PropTypes.func.isRequired,
   };
 
   return WithDelay;

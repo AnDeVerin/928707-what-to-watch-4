@@ -40,13 +40,12 @@ const withLimit = (Component) => {
 
     render() {
       const { isButtonVisible, shownMoviesCount } = this.state;
-      const { onSelect, movies, button } = this.props;
+      const { movies, button } = this.props;
 
       return (
         <>
           <Component
             {...this.props}
-            onSelect={onSelect}
             movies={movies.slice(0, shownMoviesCount)}
           />
           {isButtonVisible && button({ onClick: this.handleClick })}
@@ -57,7 +56,6 @@ const withLimit = (Component) => {
 
   WithLimit.propTypes = {
     movies: PropTypes.array.isRequired,
-    onSelect: PropTypes.func.isRequired,
     button: PropTypes.func.isRequired,
   };
 

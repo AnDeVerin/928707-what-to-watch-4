@@ -7,6 +7,7 @@ const MockComponent = (props) => <div {...props} />;
 const MockComponentWrapped = withDelay(MockComponent);
 
 const movie = {
+  id: 1,
   title: 'Aviator',
   thumbUrl: 'img/aviator.jpg',
   trailer: 'https://example.com/video.mp4',

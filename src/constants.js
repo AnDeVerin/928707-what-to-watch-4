@@ -10,4 +10,5 @@ export const AppRoute = {
   LOGIN: `/login`,
   MYLIST: `/my-list`,
   PLAYER: '/player/:filmId?',
+  FILM: `/films/:id`,
 };

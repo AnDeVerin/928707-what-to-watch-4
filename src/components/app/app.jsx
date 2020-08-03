@@ -4,13 +4,13 @@ import { Router, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Main from '../main/main.jsx';
-// import MoviePage from '../movie-page/movie-page.jsx';
+import MoviePage from '../movie-page/movie-page.jsx';
 import Modal from '../modal/modal.jsx';
 import SignIn from '../sign-in/sign-in.jsx';
 import MyList from '../my-list/my-list.jsx';
 import PlayerPage from '../player-page/player-page.jsx';
+import withVideo from '../../hocs/with-video/with-video.js';
 
-import { getSelectedMovie } from '../../reducer/app/selectors.js';
 import { getAuthStatus } from '../../reducer/user/selectors.js';
 import { getMovieById } from '../../reducer/data/selectors.js';
 
@@ -19,6 +19,8 @@ import history from '../../history.js';
 import PrivateRoute from '../private-route/private-route.jsx';
 
 import { Operation as UserOperation } from '../../reducer/user/user.js';
+
+const FullScreenPlayer = withVideo(PlayerPage);
 
 const App = (props) => {
   const { login, getMovie } = props;
@@ -41,11 +43,17 @@ const App = (props) => {
             )}
           />
 
+          <PrivateRoute
+            exact
+            path={AppRoute.MYLIST}
+            render={() => <MyList />}
+          />
+
           <Route
             exact
             path={AppRoute.PLAYER}
-            render={({ match }) => (
-              <PlayerPage
+            render={({ match, location }) => (
+              <FullScreenPlayer
                 match={match}
                 getMovie={getMovie}
                 location={location}
@@ -53,12 +61,15 @@ const App = (props) => {
             )}
           />
 
-          <PrivateRoute
+          <Route
             exact
-            path={AppRoute.MYLIST}
-            render={() => <MyList />}
+            path={AppRoute.FILM}
+            render={({ match, location }) => (
+              <MoviePage match={match} location={location} />
+            )}
           />
 
+          {/* 404 */}
           <Route
             render={() => (
               <>
@@ -78,7 +89,6 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  selectedMovie: getSelectedMovie(state),
   authStatus: getAuthStatus(state),
   getMovie: (id) => getMovieById(state, id),
 });
@@ -88,7 +98,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 App.propTypes = {
-  selectedMovie: PropTypes.object.isRequired,
   authStatus: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,

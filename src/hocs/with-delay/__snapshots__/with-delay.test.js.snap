@@ -5,6 +5,7 @@ exports[`withDelay is rendered correctly 1`] = `
   isPlaying={false}
   movie={
     Object {
+      "id": 1,
       "thumbUrl": "img/aviator.jpg",
       "title": "Aviator",
       "trailer": "https://example.com/video.mp4",
