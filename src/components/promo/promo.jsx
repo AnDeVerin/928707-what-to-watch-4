@@ -12,7 +12,7 @@ const Promo = ({ promoMovie, onFavoriteToggle }) => {
     realeseYear,
     posterUrl,
     coverUrl,
-    isFavourite,
+    isFavorite,
   } = promoMovie;
 
   return (
@@ -56,11 +56,11 @@ const Promo = ({ promoMovie, onFavoriteToggle }) => {
               </Link>
 
               <button
-                onClick={() => onFavoriteToggle({ id, isFavourite })}
+                onClick={() => onFavoriteToggle({ id, isFavorite })}
                 className="btn btn--list movie-card__button"
                 type="button"
               >
-                {isFavourite ? (
+                {isFavorite ? (
                   <>
                     <svg viewBox="0 0 18 14" width="18" height="14">
                       <use xlinkHref="#in-list" />
@@ -92,7 +92,7 @@ Promo.propTypes = {
     realeseYear: PropTypes.number.isRequired,
     posterUrl: PropTypes.string.isRequired,
     coverUrl: PropTypes.string.isRequired,
-    isFavourite: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
   onFavoriteToggle: PropTypes.func.isRequired,
 };

@@ -56,7 +56,7 @@ const MoviePage = (props) => {
     posterUrl,
     coverUrl,
     id,
-    isFavourite,
+    isFavorite,
   } = movie;
 
   const similarMovies = filterMovies({ genre, movies, id });
@@ -94,11 +94,11 @@ const MoviePage = (props) => {
                 </Link>
 
                 <button
-                  onClick={() => onFavoriteToggle({ id, isFavourite })}
+                  onClick={() => onFavoriteToggle({ id, isFavorite })}
                   className="btn btn--list movie-card__button"
                   type="button"
                 >
-                  {isFavourite ? (
+                  {isFavorite ? (
                     <>
                       <svg viewBox="0 0 18 14" width="18" height="14">
                         <use xlinkHref="#in-list" />
@@ -179,8 +179,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFavoriteToggle({ id, isFavourite }) {
-    dispatch(DataOperation.toggleFavorite({ id, isFavourite }));
+  onFavoriteToggle({ id, isFavorite }) {
+    dispatch(DataOperation.toggleFavorite({ id, isFavorite }));
   },
 });
 

@@ -2,7 +2,7 @@ export const createMoviesData = (movies) =>
   movies.map((movie) => ({
     id: movie.id,
     backgroundColor: movie.background_color,
-    isFavourite: movie.is_favorite,
+    isFavorite: movie.is_favorite,
     title: movie.name,
     thumbUrl: movie.preview_image,
     genre: movie.genre,

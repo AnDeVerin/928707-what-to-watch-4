@@ -17,7 +17,7 @@ const PROMO_MOVIE = {
   realeseYear: 1984,
   thumbUrl: `https://htmlacademy-react-3.appspot.com/wtw/static/film/preview/Once_Upon_a_Time_in_America.jpg`,
   title: `Once Upon a Time in America`,
-  isFavourite: false,
+  isFavorite: false,
 };
 
 const MOVIES = [

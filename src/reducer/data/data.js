@@ -13,7 +13,7 @@ const initialState = {
     realeseYear: 0,
     posterUrl: '',
     coverUrl: '',
-    isFavourite: false,
+    isFavorite: false,
   },
 };
 

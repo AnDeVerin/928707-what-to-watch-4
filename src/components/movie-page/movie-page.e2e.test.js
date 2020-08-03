@@ -16,7 +16,7 @@ const mockStore = configureStore([]);
 
 const movie = {
   id: 1,
-  isFavourite: false,
+  isFavorite: false,
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
   thumbUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Adventure`,
@@ -128,7 +128,7 @@ describe('MoviePage component', () => {
     expect(onToggleMock).toHaveBeenCalledTimes(1);
     expect(onToggleMock).toHaveBeenCalledWith({
       id: 1,
-      isFavourite: false,
+      isFavorite: false,
     });
   });
 });

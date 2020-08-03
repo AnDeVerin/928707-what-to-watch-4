@@ -50,8 +50,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFavoriteToggle({ id, isFavourite }) {
-    dispatch(DataOperation.toggleFavorite({ id, isFavourite }));
+  onFavoriteToggle({ id, isFavorite }) {
+    dispatch(DataOperation.toggleFavorite({ id, isFavorite }));
   },
 });
 

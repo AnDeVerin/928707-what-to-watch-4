@@ -40,7 +40,7 @@ const movies = [
     coverUrl: 'img/the-grand-budapest-hotel-bg.jpg',
     genre: 'Comedy',
     id: 1,
-    isFavourite: false,
+    isFavorite: false,
     overview: {
       description:
         "In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
@@ -73,7 +73,7 @@ const updatedMovie = {
   coverUrl: 'img/the-grand-budapest-hotel-bg.jpg',
   genre: 'Comedy',
   id: 1,
-  isFavourite: true,
+  isFavorite: true,
   overview: {
     description:
       "In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
@@ -110,7 +110,7 @@ it(`Reducer without additional parameters should return initial state`, () => {
       coverUrl: '',
       posterUrl: '',
       id: 0,
-      isFavourite: false,
+      isFavorite: false,
     },
   });
 });
@@ -131,7 +131,7 @@ it(`Reducer should update questions by load questions`, () => {
   });
 });
 
-it(`Reducer should update movies by changing isFavourite field`, () => {
+it(`Reducer should update movies by changing isFavorite field`, () => {
   expect(
     reducer(
       {
@@ -161,7 +161,7 @@ it(`Reducer should not change state on Review post`, () => {
           coverUrl: '',
           posterUrl: '',
           id: 0,
-          isFavourite: false,
+          isFavorite: false,
         },
       },
       {
@@ -178,7 +178,7 @@ it(`Reducer should not change state on Review post`, () => {
       coverUrl: '',
       posterUrl: '',
       id: 0,
-      isFavourite: false,
+      isFavorite: false,
     },
   });
 });
