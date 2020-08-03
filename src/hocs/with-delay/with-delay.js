@@ -21,10 +21,9 @@ const withDelay = (Component) => {
     }
 
     handleClick(e) {
-      const { onClick, movie } = this.props;
+      const { movie } = this.props;
 
       e.preventDefault();
-      onClick(movie);
       history.push(`/films/${movie.id}`);
     }
 
@@ -71,7 +70,6 @@ const withDelay = (Component) => {
       trailer: PropTypes.string.isRequired,
       id: PropTypes.number.isRequired,
     }).isRequired,
-    onClick: PropTypes.func.isRequired,
   };
 
   return WithDelay;
