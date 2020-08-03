@@ -32,7 +32,7 @@ const Header = ({ authStatus, user, renderTitle = () => {} }) => (
             <img
               src={`${HOST}${user.avatar_url}`}
               alt="User avatar"
-              title={user.email}
+              title="Go to my list"
               width="63"
               height="63"
             />
