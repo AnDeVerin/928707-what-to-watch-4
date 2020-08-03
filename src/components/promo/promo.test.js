@@ -33,7 +33,7 @@ describe('Promo component', () => {
       .create(
         <Provider store={store}>
           <Router history={history}>
-            <Promo promoMovie={promoMovie} onAdd={jest.fn()} />
+            <Promo promoMovie={promoMovie} onFavouriteToggle={jest.fn()} />
           </Router>
         </Provider>
       )
