@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/header.jsx';
 import { Link } from 'react-router-dom';
 
-const Promo = ({ promoMovie, onAdd }) => {
+const Promo = ({ promoMovie, onFavouriteToggle }) => {
   const {
     id,
     title,
@@ -56,7 +56,7 @@ const Promo = ({ promoMovie, onAdd }) => {
               </Link>
 
               <button
-                onClick={() => onAdd({ id, isFavourite })}
+                onClick={() => onFavouriteToggle({ id, isFavourite })}
                 className="btn btn--list movie-card__button"
                 type="button"
               >
@@ -94,7 +94,7 @@ Promo.propTypes = {
     coverUrl: PropTypes.string.isRequired,
     isFavourite: PropTypes.bool.isRequired,
   }).isRequired,
-  onAdd: PropTypes.func.isRequired,
+  onFavouriteToggle: PropTypes.func.isRequired,
 };
 
 export default Promo;
