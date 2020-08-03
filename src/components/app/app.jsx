@@ -11,6 +11,7 @@ import MyList from '../my-list/my-list.jsx';
 import PlayerPage from '../player-page/player-page.jsx';
 import withVideo from '../../hocs/with-video/with-video.js';
 import Review from '../review/review.jsx';
+import withForm from '../../hocs/with-form/with-form.js';
 
 import { getAuthStatus } from '../../reducer/user/selectors.js';
 import { getMovieById } from '../../reducer/data/selectors.js';
@@ -23,6 +24,7 @@ import { Operation as UserOperation } from '../../reducer/user/user.js';
 import { Operation as DataOperation } from '../../reducer/data/data.js';
 
 const FullScreenPlayer = withVideo(PlayerPage);
+const ReviewPage = withForm(Review);
 
 const App = (props) => {
   const { login, getMovie, postReview } = props;
@@ -67,7 +69,7 @@ const App = (props) => {
             exact
             path={AppRoute.REVIEW}
             render={({ match, location }) => (
-              <Review
+              <ReviewPage
                 match={match}
                 location={location}
                 getMovie={getMovie}
