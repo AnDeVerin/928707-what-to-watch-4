@@ -10,7 +10,6 @@ import SignIn from '../sign-in/sign-in.jsx';
 import MyList from '../my-list/my-list.jsx';
 import PlayerPage from '../player-page/player-page.jsx';
 
-import { getSelectedMovie } from '../../reducer/app/selectors.js';
 import { getAuthStatus } from '../../reducer/user/selectors.js';
 import { getMovieById } from '../../reducer/data/selectors.js';
 
@@ -62,7 +61,9 @@ const App = (props) => {
           <Route
             exact
             path={AppRoute.FILM}
-            render={({ location }) => <MoviePage location={location} />}
+            render={({ match, location }) => (
+              <MoviePage match={match} location={location} />
+            )}
           />
 
           {/* 404 */}
@@ -85,7 +86,6 @@ const App = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  selectedMovie: getSelectedMovie(state),
   authStatus: getAuthStatus(state),
   getMovie: (id) => getMovieById(state, id),
 });
@@ -95,7 +95,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 App.propTypes = {
-  selectedMovie: PropTypes.object.isRequired,
   authStatus: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
