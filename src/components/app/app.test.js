@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
@@ -64,6 +65,13 @@ const MOVIES = [
   },
 ];
 
+const user = {
+  avatar_url: '/wtw/static/avatar/5.jpg',
+  email: 'user@mail.com',
+  id: 1,
+  name: 'user',
+};
+
 describe('App component', () => {
   it('renders correctly', () => {
     const store = mockStore({
@@ -78,6 +86,7 @@ describe('App component', () => {
       },
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
+        user,
       },
     });
 

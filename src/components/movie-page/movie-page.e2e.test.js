@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import { Provider } from 'react-redux';
@@ -86,11 +87,19 @@ const movie = {
   ],
 };
 
+const user = {
+  avatar_url: '/wtw/static/avatar/5.jpg',
+  email: 'user@mail.com',
+  id: 1,
+  name: 'user',
+};
+
 describe('MoviePage component', () => {
   it(`Should call passed function on Add to my list button click`, () => {
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
+        user,
       },
       [NameSpace.DATA]: {
         movies: [movie],

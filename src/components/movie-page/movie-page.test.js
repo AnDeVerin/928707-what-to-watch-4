@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
@@ -81,11 +82,19 @@ const movie = {
   ],
 };
 
+const user = {
+  avatar_url: '/wtw/static/avatar/5.jpg',
+  email: 'user@mail.com',
+  id: 1,
+  name: 'user',
+};
+
 describe(`MoviePage component`, () => {
   it(`renders correctly`, () => {
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
+        user,
       },
     });
 

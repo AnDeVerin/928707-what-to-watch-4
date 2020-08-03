@@ -83,7 +83,8 @@ Array [
             <img
               alt="User avatar"
               height="63"
-              src="img/avatar.jpg"
+              src="https://4.react.pages.academy/wtw/static/avatar/5.jpg"
+              title="user@mail.com"
               width="63"
             />
           </div>
