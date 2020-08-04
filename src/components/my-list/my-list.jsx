@@ -39,6 +39,11 @@ class MyList extends PureComponent {
   }
 }
 
+MyList.propTypes = {
+  loadMyList: PropTypes.func.isRequired,
+  movies: PropTypes.array.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   movies: getMyList(state),
 });
@@ -46,11 +51,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadMyList: () => dispatch(DataOperation.loadMyList()),
 });
-
-MyList.propTypes = {
-  loadMyList: PropTypes.func.isRequired,
-  movies: PropTypes.array.isRequired,
-};
 
 export { MyList };
 export default connect(mapStateToProps, mapDispatchToProps)(MyList);

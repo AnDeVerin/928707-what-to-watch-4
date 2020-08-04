@@ -38,6 +38,12 @@ const GenreList = ({ activeGenre, movies, onGenreSelect }) => {
   );
 };
 
+GenreList.propTypes = {
+  activeGenre: PropTypes.string.isRequired,
+  onGenreSelect: PropTypes.func.isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+};
+
 const mapStateToProps = (state) => ({
   activeGenre: getSelectedGenre(state),
   movies: getMovies(state),
@@ -48,12 +54,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.setGenre(genre));
   },
 });
-
-GenreList.propTypes = {
-  activeGenre: PropTypes.string.isRequired,
-  onGenreSelect: PropTypes.func.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-};
 
 export { GenreList };
 export default connect(mapStateToProps, mapDispatchToProps)(GenreList);

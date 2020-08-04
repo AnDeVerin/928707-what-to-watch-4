@@ -53,6 +53,12 @@ class ReviewsTab extends PureComponent {
   }
 }
 
+ReviewsTab.propTypes = {
+  filmId: PropTypes.number.isRequired,
+  loadReviews: PropTypes.func.isRequired,
+  reviews: PropTypes.array.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   reviews: getReviews(state),
 });
@@ -60,12 +66,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadReviews: (filmId) => dispatch(DataOperation.loadReviews(filmId)),
 });
-
-ReviewsTab.propTypes = {
-  filmId: PropTypes.number.isRequired,
-  loadReviews: PropTypes.func.isRequired,
-  reviews: PropTypes.array.isRequired,
-};
 
 export { ReviewsTab };
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewsTab);

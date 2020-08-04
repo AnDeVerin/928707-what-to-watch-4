@@ -105,6 +105,13 @@ const App = (props) => {
   );
 };
 
+App.propTypes = {
+  authStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
+  getMovie: PropTypes.func.isRequired,
+  postReview: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
   getMovie: (id) => getMovieById(state, id),
@@ -114,13 +121,6 @@ const mapDispatchToProps = (dispatch) => ({
   login: (authData) => dispatch(UserOperation.login(authData)),
   postReview: (review) => dispatch(DataOperation.postReview(review)),
 });
-
-App.propTypes = {
-  authStatus: PropTypes.string.isRequired,
-  login: PropTypes.func.isRequired,
-  getMovie: PropTypes.func.isRequired,
-  postReview: PropTypes.func.isRequired,
-};
 
 export { App };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

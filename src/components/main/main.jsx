@@ -33,6 +33,16 @@ const Main = ({ movies, promoMovie, onFavoriteToggle }) => {
   );
 };
 
+Main.propTypes = {
+  promoMovie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    realeseYear: PropTypes.number.isRequired,
+  }).isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   movies: getMoviesByGenre(state),
   promoMovie: getPromo(state),
@@ -43,16 +53,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.toggleFavorite({ id, isFavorite }));
   },
 });
-
-Main.propTypes = {
-  promoMovie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    realeseYear: PropTypes.number.isRequired,
-  }).isRequired,
-  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onFavoriteToggle: PropTypes.func.isRequired,
-};
 
 export { Main };
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -163,6 +163,15 @@ const MoviePage = (props) => {
   );
 };
 
+MoviePage.propTypes = {
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
+  getMovie: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   movies: getMovies(state),
   getMovie: (id) => getMovieById(state, id),
@@ -174,15 +183,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.toggleFavorite({ id, isFavorite }));
   },
 });
-
-MoviePage.propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onFavoriteToggle: PropTypes.func.isRequired,
-  getMovie: PropTypes.func.isRequired,
-  authStatus: PropTypes.string.isRequired,
-};
 
 export { MoviePage };
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);

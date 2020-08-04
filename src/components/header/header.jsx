@@ -43,16 +43,16 @@ const Header = ({ authStatus, user, renderTitle = () => {} }) => (
   </header>
 );
 
-const mapStateToProps = (state) => ({
-  authStatus: getAuthStatus(state),
-  user: getUser(state),
-});
-
 Header.propTypes = {
   authStatus: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   renderTitle: PropTypes.func,
 };
+
+const mapStateToProps = (state) => ({
+  authStatus: getAuthStatus(state),
+  user: getUser(state),
+});
 
 export { Header };
 export default connect(mapStateToProps)(Header);

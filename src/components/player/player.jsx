@@ -1,7 +1,7 @@
 import React, { PureComponent, createRef } from 'react';
 import PropTypes from 'prop-types';
 
-export default class Player extends PureComponent {
+class Player extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -49,3 +49,5 @@ Player.propTypes = {
   poster: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
 };
+
+export default Player;
