@@ -83,7 +83,8 @@ Array [
             <img
               alt="User avatar"
               height="63"
-              src="img/avatar.jpg"
+              src="https://4.react.pages.academy/wtw/static/avatar/5.jpg"
+              title="Go to my list"
               width="63"
             />
           </div>
@@ -235,7 +236,6 @@ Array [
           >
             <video
               className="player__video"
-              muted={true}
               playsInline={true}
               poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
               src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
@@ -264,7 +264,6 @@ Array [
           >
             <video
               className="player__video"
-              muted={true}
               playsInline={true}
               poster="img/bohemian-rhapsody.jpg"
               src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
@@ -292,6 +291,8 @@ Array [
       >
         <a
           className="logo__link logo__link--light"
+          href="/"
+          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"

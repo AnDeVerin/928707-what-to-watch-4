@@ -5,10 +5,17 @@ import { createAPI } from '../../api.js';
 import { reducer, ActionType, Operation, AuthorizationStatus } from './user.js';
 
 const api = createAPI(() => {});
+const user = {
+  avatar_url: '/wtw/static/avatar/5.jpg',
+  email: 'user@mail.com',
+  id: 1,
+  name: 'user',
+};
 
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
-    authorizationStatus: 'NO_AUTH',
+    authorizationStatus: 'UNKNOWN',
+    user: {},
   });
 });
 
@@ -32,16 +39,15 @@ describe(`Operation work correctly`, () => {
     const dispatch = jest.fn();
     const authChecker = Operation.checkAuth();
 
-    apiMock.onGet(`/login`).reply(200, {
-      avatar_url: '/wtw/static/avatar/5.jpg',
-      email: 'user@mail.com',
-      id: 1,
-      name: 'user',
-    });
+    apiMock.onGet(`/login`).reply(200, user);
 
     return authChecker(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.SET_USER,
+        payload: user,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
         type: ActionType.REQUIRED_AUTHORIZATION,
         payload: 'AUTH',
       });
@@ -56,16 +62,15 @@ describe(`Operation work correctly`, () => {
       password: `12345`,
     });
 
-    apiMock.onPost(`/login`).reply(200, {
-      avatar_url: '/wtw/static/avatar/5.jpg',
-      email: 'user@mail.com',
-      id: 1,
-      name: 'user',
-    });
+    apiMock.onPost(`/login`).reply(200, user);
 
     return login(dispatch, () => {}, api).then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.SET_USER,
+        payload: user,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
         type: ActionType.REQUIRED_AUTHORIZATION,
         payload: 'AUTH',
       });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import formatPlayerTime from '../../utils/formatPalyerTime.js';
 
-export default class PlayerPage extends PureComponent {
+class PlayerPage extends PureComponent {
   render() {
     const {
       isLoading,
@@ -92,3 +92,5 @@ PlayerPage.propTypes = {
     PropTypes.node,
   ]).isRequired,
 };
+
+export default PlayerPage;

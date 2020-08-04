@@ -95,12 +95,12 @@ const withVideo = (Component) => {
       video.src = ``;
     }
 
-    onPlayButtonClickHandler() {
+    handlePlayButtonClick() {
       const { isPlaying } = this.state;
       this.setState({ isPlaying: !isPlaying });
     }
 
-    onExitHandler() {
+    handleExit() {
       const {
         location: { state },
       } = this.props;
@@ -114,7 +114,7 @@ const withVideo = (Component) => {
       }
     }
 
-    onToggleFullScreenHandler() {
+    handleToggleFullScreen() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
       } else {
@@ -135,9 +135,9 @@ const withVideo = (Component) => {
           progress={progress}
           duration={duration}
           title={this.movie && this.movie.title}
-          onExit={this.onExitHandler.bind(this)}
-          onPlayButtonClick={this.onPlayButtonClickHandler.bind(this)}
-          onToggleFullScreen={this.onToggleFullScreenHandler.bind(this)}
+          onExit={this.handleExit.bind(this)}
+          onPlayButtonClick={this.handlePlayButtonClick.bind(this)}
+          onToggleFullScreen={this.handleToggleFullScreen.bind(this)}
         >
           <video playsInline ref={this._videoRef} className="player__video" />
         </Component>

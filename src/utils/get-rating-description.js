@@ -1,25 +1,18 @@
-const SCORES = {
-  BAD: 'Bad',
-  NORMAL: 'Normal',
-  GOOD: 'Good',
-  VERY_GOOD: 'Very good',
-  AWESOME: 'Awesome',
-  UNKNOWN: '-',
-};
+import { Scores } from '../constants.js';
 
 const getRatingDescription = (value) => {
   if (value < 3) {
-    return SCORES.BAD;
+    return Scores.BAD;
   } else if (value >= 3 && value < 5) {
-    return SCORES.NORMAL;
+    return Scores.NORMAL;
   } else if (value >= 5 && value < 8) {
-    return SCORES.GOOD;
+    return Scores.GOOD;
   } else if (value >= 8 && value < 10) {
-    return SCORES.VERY_GOOD;
+    return Scores.VERY_GOOD;
   } else if (value === 10) {
-    return SCORES.AWESOME;
+    return Scores.AWESOME;
   }
-  return SCORES.UNKNOWN;
+  return Scores.UNKNOWN;
 };
 
 export default getRatingDescription;

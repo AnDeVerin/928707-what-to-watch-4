@@ -13,14 +13,19 @@ const initialState = {
     realeseYear: 0,
     posterUrl: '',
     coverUrl: '',
-    isFavourite: false,
+    isFavorite: false,
   },
+  reviews: [],
+  myList: [],
 };
 
 const ActionType = {
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
   UPDATE_MOVIES: `UPDATE_MOVIES`,
+  POST_REVIEW: `POST_REVIEW`,
+  LOAD_REVIEWS: `LOAD_REVIEWS`,
+  LOAD_MYLIST: `LOAD_MYLIST`,
 };
 
 const ActionCreator = {
@@ -38,6 +43,21 @@ const ActionCreator = {
     type: ActionType.UPDATE_MOVIES,
     payload: createMoviesData([movie])[0],
   }),
+
+  postReview: () => ({
+    type: ActionType.POST_REVIEW,
+    payload: null,
+  }),
+
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews,
+  }),
+
+  loadMyList: (movies) => ({
+    type: ActionType.LOAD_MYLIST,
+    payload: createMoviesData(movies),
+  }),
 };
 
 const Operation = {
@@ -48,7 +68,37 @@ const Operation = {
         dispatch(ActionCreator.loadMovies(response.data));
       })
       .catch((err) => {
-        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  loadMyList: () => (dispatch, getState, api) => {
+    return api
+      .get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.loadMyList(response.data));
+      })
+      .catch((err) => {
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  loadReviews: (filmId) => (dispatch, getState, api) => {
+    return api
+      .get(`/comments/${filmId}`)
+      .then((response) => {
+        dispatch(ActionCreator.loadReviews(response.data));
+      })
+      .catch((err) => {
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
         dispatch(AppActionCreator.showModal());
       });
   },
@@ -60,25 +110,51 @@ const Operation = {
         dispatch(ActionCreator.loadPromo(response.data));
       })
       .catch((err) => {
-        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
         dispatch(AppActionCreator.showModal());
       });
   },
 
-  onFavouriteToggle: ({ id, isFavourite }) => (dispatch, getState, api) => {
+  toggleFavorite: ({ id, isFavorite }) => (dispatch, getState, api) => {
     return api
-      .post(`/favorite/${id}/${isFavourite ? 0 : 1}`)
+      .post(`/favorite/${id}/${isFavorite ? 0 : 1}`)
       .then((response) => {
         dispatch(ActionCreator.updateMovies(response.data));
       })
       .catch((err) => {
-        if (err === Error.UNAUTHORIZED) {
+        if (err.status === Error.UNAUTHORIZED) {
           history.push(AppRoute.LOGIN);
           return;
         }
 
-        dispatch(AppActionCreator.setErrorText(err.toString()));
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
         dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  postReview: ({ id, rating, comment }) => (dispatch, getState, api) => {
+    return api
+      .post(`/comments/${id}`, { rating, comment })
+      .then(() => {
+        dispatch(ActionCreator.postReview());
+        history.push(`/films/${id}`);
+      })
+      .catch((err) => {
+        if (err.status === Error.UNAUTHORIZED) {
+          history.push(AppRoute.LOGIN);
+          return;
+        }
+
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+
+        throw err;
       });
   },
 };
@@ -88,8 +164,14 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_MOVIES:
       return extend(state, { movies: action.payload });
 
+    case ActionType.LOAD_MYLIST:
+      return extend(state, { myList: action.payload });
+
     case ActionType.LOAD_PROMO:
       return extend(state, { promo: action.payload });
+
+    case ActionType.POST_REVIEW:
+      return state;
 
     case ActionType.UPDATE_MOVIES:
       const movie = action.payload;
@@ -99,6 +181,9 @@ const reducer = (state = initialState, action) => {
       updatedMovies.splice(movieIdx, 1, movie);
 
       return extend(state, { promo: updatedPromo, movies: updatedMovies });
+
+    case ActionType.LOAD_REVIEWS:
+      return extend(state, { reviews: action.payload });
   }
 
   return state;

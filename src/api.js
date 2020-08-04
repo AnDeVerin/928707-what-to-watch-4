@@ -1,3 +1,5 @@
+/* eslint-disable no-throw-literal */
+
 import axios from 'axios';
 import { Error } from './constants.js';
 
@@ -15,12 +17,17 @@ export const createAPI = (onUnauthorized) => {
   const onFail = (err) => {
     const { response } = err;
 
-    if (response && response.status === Error.UNAUTHORIZED) {
-      onUnauthorized();
+    if (response) {
+      if (response.status === Error.UNAUTHORIZED) {
+        onUnauthorized();
+      }
 
       // Бросаем ошибку, потому что нам важно прервать цепочку промисов после запроса авторизации.
       // Запрос авторизации - это особый случай и важно дать понять приложению, что запрос был неудачным.
-      throw Error.UNAUTHORIZED;
+      throw {
+        status: response.status,
+        errorMessage: response.data.error,
+      };
     }
 
     throw err;

@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-// import history from '../../history.js';
-
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
 import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
 
 import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
 import { Operation as DataOperation } from '../../reducer/data/data.js';
 import { getMovies, getMovieById } from '../../reducer/data/selectors.js';
+import { AuthorizationStatus } from '../../reducer/user/user.js';
+import { getAuthStatus } from '../../reducer/user/selectors.js';
+import { TabName } from '../../constants.js';
 
 const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
-
-const tabItems = [`overview`, `details`, `reviews`];
 
 const filterMovies = ({ genre = 'All genres', movies = [], limit = 4, id }) => {
   const filteredMovies =
@@ -32,8 +32,16 @@ const filterMovies = ({ genre = 'All genres', movies = [], limit = 4, id }) => {
 };
 
 const MoviePage = (props) => {
-  const { match, location, movies, onFavouriteToggle, getMovie } = props;
+  const {
+    match,
+    location,
+    movies,
+    onFavoriteToggle,
+    getMovie,
+    authStatus,
+  } = props;
 
+  const isUser = authStatus === AuthorizationStatus.AUTH;
   const filmId = Number.parseInt(match.params.id, 10);
   const movie = getMovie(filmId);
 
@@ -48,7 +56,7 @@ const MoviePage = (props) => {
     posterUrl,
     coverUrl,
     id,
-    isFavourite,
+    isFavorite,
   } = movie;
 
   const similarMovies = filterMovies({ genre, movies, id });
@@ -58,7 +66,7 @@ const MoviePage = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={coverUrl} alt="The Grand Budapest Hotel" />
+            <img src={coverUrl} alt={title} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -86,11 +94,11 @@ const MoviePage = (props) => {
                 </Link>
 
                 <button
-                  onClick={() => onFavouriteToggle({ id, isFavourite })}
+                  onClick={() => onFavoriteToggle({ id, isFavorite })}
                   className="btn btn--list movie-card__button"
                   type="button"
                 >
-                  {isFavourite ? (
+                  {isFavorite ? (
                     <>
                       <svg viewBox="0 0 18 14" width="18" height="14">
                         <use xlinkHref="#in-list" />
@@ -107,9 +115,17 @@ const MoviePage = (props) => {
                   )}
                 </button>
 
-                <a href="add-review.html" className="btn movie-card__button">
-                  Add review
-                </a>
+                {isUser && (
+                  <Link
+                    to={{
+                      pathname: `/films/${id}/review`,
+                      state: { from: location },
+                    }}
+                    className="btn movie-card__button"
+                  >
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -126,7 +142,10 @@ const MoviePage = (props) => {
               />
             </div>
 
-            <MovieTabsWithActiveItem movie={movie} items={tabItems} />
+            <MovieTabsWithActiveItem
+              movie={movie}
+              items={Object.values(TabName)}
+            />
           </div>
         </div>
       </section>
@@ -138,42 +157,32 @@ const MoviePage = (props) => {
           <MovieList movies={similarMovies} />
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2020 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
 };
 
-const mapStateToProps = (state) => ({
-  movies: getMovies(state),
-  getMovie: (id) => getMovieById(state, id),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onFavouriteToggle({ id, isFavourite }) {
-    dispatch(DataOperation.onFavouriteToggle({ id, isFavourite }));
-  },
-});
-
 MoviePage.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   movies: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  onFavouriteToggle: PropTypes.func.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
   getMovie: PropTypes.func.isRequired,
+  authStatus: PropTypes.string.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  movies: getMovies(state),
+  getMovie: (id) => getMovieById(state, id),
+  authStatus: getAuthStatus(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onFavoriteToggle({ id, isFavorite }) {
+    dispatch(DataOperation.toggleFavorite({ id, isFavorite }));
+  },
+});
 
 export { MoviePage };
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/header.jsx';
 import { Link } from 'react-router-dom';
 
-const Promo = ({ promoMovie, onFavouriteToggle }) => {
+const Promo = ({ promoMovie, onFavoriteToggle }) => {
   const {
     id,
     title,
@@ -12,7 +12,7 @@ const Promo = ({ promoMovie, onFavouriteToggle }) => {
     realeseYear,
     posterUrl,
     coverUrl,
-    isFavourite,
+    isFavorite,
   } = promoMovie;
 
   return (
@@ -56,11 +56,11 @@ const Promo = ({ promoMovie, onFavouriteToggle }) => {
               </Link>
 
               <button
-                onClick={() => onFavouriteToggle({ id, isFavourite })}
+                onClick={() => onFavoriteToggle({ id, isFavorite })}
                 className="btn btn--list movie-card__button"
                 type="button"
               >
-                {isFavourite ? (
+                {isFavorite ? (
                   <>
                     <svg viewBox="0 0 18 14" width="18" height="14">
                       <use xlinkHref="#in-list" />
@@ -92,9 +92,9 @@ Promo.propTypes = {
     realeseYear: PropTypes.number.isRequired,
     posterUrl: PropTypes.string.isRequired,
     coverUrl: PropTypes.string.isRequired,
-    isFavourite: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
-  onFavouriteToggle: PropTypes.func.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
 };
 
 export default Promo;

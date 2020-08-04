@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
@@ -16,7 +17,7 @@ const PROMO_MOVIE = {
   realeseYear: 1984,
   thumbUrl: `https://htmlacademy-react-3.appspot.com/wtw/static/film/preview/Once_Upon_a_Time_in_America.jpg`,
   title: `Once Upon a Time in America`,
-  isFavourite: false,
+  isFavorite: false,
 };
 
 const MOVIES = [
@@ -64,6 +65,13 @@ const MOVIES = [
   },
 ];
 
+const user = {
+  avatar_url: '/wtw/static/avatar/5.jpg',
+  email: 'user@mail.com',
+  id: 1,
+  name: 'user',
+};
+
 describe('App component', () => {
   it('renders correctly', () => {
     const store = mockStore({
@@ -78,6 +86,7 @@ describe('App component', () => {
       },
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
+        user,
       },
     });
 
@@ -89,6 +98,7 @@ describe('App component', () => {
             authStatus={AuthorizationStatus.AUTH}
             login={jest.fn()}
             getMovie={jest.fn()}
+            postReview={jest.fn()}
           />
         </Provider>,
         {

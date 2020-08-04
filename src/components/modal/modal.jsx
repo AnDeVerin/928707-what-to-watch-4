@@ -22,6 +22,12 @@ const Modal = ({ text, isVisible, onClick }) => {
   );
 };
 
+Modal.propTypes = {
+  text: PropTypes.string.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   isVisible: getModalState(state),
   text: getErrorText(state),
@@ -32,12 +38,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.hideModal());
   },
 });
-
-Modal.propTypes = {
-  text: PropTypes.string.isRequired,
-  isVisible: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export { Modal };
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

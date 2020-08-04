@@ -11,12 +11,7 @@ describe('Player component', () => {
   it('renders correctly', () => {
     const component = renderer
       .create(
-        <Player
-          isPlaying={true}
-          isMuted={true}
-          poster={MOVIE.thumbUrl}
-          src={MOVIE.trailer}
-        />,
+        <Player isPlaying={true} poster={MOVIE.thumbUrl} src={MOVIE.trailer} />,
         {
           createNodeMock: () => {
             return {

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withForm is rendered correctly 1`] = `
+<div
+  comment=""
+  getMovie={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          1,
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  isDisabled={false}
+  isFormValid={false}
+  location={Object {}}
+  match={
+    Object {
+      "params": Object {
+        "id": 1,
+      },
+    }
+  }
+  onRatingChange={[Function]}
+  onSubmit={[Function]}
+  onTextInput={[Function]}
+  rating=""
+/>
+`;

@@ -10,6 +10,8 @@ import SignIn from '../sign-in/sign-in.jsx';
 import MyList from '../my-list/my-list.jsx';
 import PlayerPage from '../player-page/player-page.jsx';
 import withVideo from '../../hocs/with-video/with-video.js';
+import Review from '../review/review.jsx';
+import withForm from '../../hocs/with-form/with-form.js';
 
 import { getAuthStatus } from '../../reducer/user/selectors.js';
 import { getMovieById } from '../../reducer/data/selectors.js';
@@ -19,11 +21,13 @@ import history from '../../history.js';
 import PrivateRoute from '../private-route/private-route.jsx';
 
 import { Operation as UserOperation } from '../../reducer/user/user.js';
+import { Operation as DataOperation } from '../../reducer/data/data.js';
 
 const FullScreenPlayer = withVideo(PlayerPage);
+const ReviewPage = withForm(Review);
 
 const App = (props) => {
-  const { login, getMovie } = props;
+  const { login, getMovie, postReview } = props;
 
   return (
     <>
@@ -55,8 +59,21 @@ const App = (props) => {
             render={({ match, location }) => (
               <FullScreenPlayer
                 match={match}
-                getMovie={getMovie}
                 location={location}
+                getMovie={getMovie}
+              />
+            )}
+          />
+
+          <PrivateRoute
+            exact
+            path={AppRoute.REVIEW}
+            render={({ match, location }) => (
+              <ReviewPage
+                match={match}
+                location={location}
+                getMovie={getMovie}
+                onSubmit={postReview}
               />
             )}
           />
@@ -88,6 +105,13 @@ const App = (props) => {
   );
 };
 
+App.propTypes = {
+  authStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
+  getMovie: PropTypes.func.isRequired,
+  postReview: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   authStatus: getAuthStatus(state),
   getMovie: (id) => getMovieById(state, id),
@@ -95,13 +119,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   login: (authData) => dispatch(UserOperation.login(authData)),
+  postReview: (review) => dispatch(DataOperation.postReview(review)),
 });
-
-App.propTypes = {
-  authStatus: PropTypes.string.isRequired,
-  login: PropTypes.func.isRequired,
-  getMovie: PropTypes.func.isRequired,
-};
 
 export { App };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

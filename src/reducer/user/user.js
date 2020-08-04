@@ -1,25 +1,33 @@
 import { extend } from '../../utils/extend.js';
+import { Error } from '../../constants.js';
+import { ActionCreator as AppActionCreator } from '../app/app.js';
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
+  UNKNOWN: `UNKNOWN`,
 };
 
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  user: {},
 };
 
 const ActionType = {
   REQUIRED_AUTHORIZATION: `REQUIRED_AUTHORIZATION`,
+  SET_USER: `SET_USER`,
 };
 
 const ActionCreator = {
-  requireAuthorization: (status) => {
-    return {
-      type: ActionType.REQUIRED_AUTHORIZATION,
-      payload: status,
-    };
-  },
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  }),
+
+  setUser: (user) => ({
+    type: ActionType.SET_USER,
+    payload: user,
+  }),
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +35,11 @@ const reducer = (state = initialState, action) => {
     case ActionType.REQUIRED_AUTHORIZATION:
       return extend(state, {
         authorizationStatus: action.payload,
+      });
+
+    case ActionType.SET_USER:
+      return extend(state, {
+        user: action.payload,
       });
   }
 
@@ -37,26 +50,36 @@ const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
     return api
       .get(`/login`)
-      .then(() => {
-        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-      })
-      .catch(() => {
-        // eslint-disable-next-line no-console
-        console.log('User is not logged in');
-      });
-  },
-
-  login: (authData) => (dispatch, getState, api) => {
-    return api
-      .post(`/login`, {
-        email: authData.email,
-        password: authData.password,
-      })
-      .then(() => {
+      .then(({ data }) => {
+        dispatch(ActionCreator.setUser(data));
         dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       })
       .catch((err) => {
-        throw err;
+        if (err.status === Error.UNAUTHORIZED) {
+          // eslint-disable-next-line no-console
+          console.log(err.errorMessage);
+          return;
+        }
+
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  login: ({ email, password }) => (dispatch, getState, api) => {
+    return api
+      .post(`/login`, { email, password })
+      .then(({ data }) => {
+        dispatch(ActionCreator.setUser(data));
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      })
+      .catch((err) => {
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
       });
   },
 };

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { configure, mount } from 'enzyme';
 import { Provider } from 'react-redux';
@@ -15,7 +16,7 @@ const mockStore = configureStore([]);
 
 const movie = {
   id: 1,
-  isFavourite: false,
+  isFavorite: false,
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
   thumbUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Adventure`,
@@ -86,11 +87,19 @@ const movie = {
   ],
 };
 
+const user = {
+  avatar_url: '/wtw/static/avatar/5.jpg',
+  email: 'user@mail.com',
+  id: 1,
+  name: 'user',
+};
+
 describe('MoviePage component', () => {
   it(`Should call passed function on Add to my list button click`, () => {
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
+        user,
       },
       [NameSpace.DATA]: {
         movies: [movie],
@@ -106,8 +115,9 @@ describe('MoviePage component', () => {
             match={{ params: { id: 1 } }}
             location={{}}
             movies={[movie]}
-            onFavouriteToggle={onToggleMock}
+            onFavoriteToggle={onToggleMock}
             getMovie={() => movie}
+            authStatus={AuthorizationStatus.AUTH}
           />
         </Router>
       </Provider>
@@ -118,7 +128,7 @@ describe('MoviePage component', () => {
     expect(onToggleMock).toHaveBeenCalledTimes(1);
     expect(onToggleMock).toHaveBeenCalledWith({
       id: 1,
-      isFavourite: false,
+      isFavorite: false,
     });
   });
 });

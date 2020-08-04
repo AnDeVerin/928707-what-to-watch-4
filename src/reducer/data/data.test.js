@@ -40,7 +40,7 @@ const movies = [
     coverUrl: 'img/the-grand-budapest-hotel-bg.jpg',
     genre: 'Comedy',
     id: 1,
-    isFavourite: false,
+    isFavorite: false,
     overview: {
       description:
         "In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
@@ -60,7 +60,6 @@ const movies = [
     },
     posterUrl: 'img/the-grand-budapest-hotel-poster.jpg',
     realeseYear: 2014,
-    reviews: [],
     thumbUrl: 'img/the-grand-budapest-hotel.jpg',
     title: 'The Grand Budapest Hotel',
     trailer: 'https://some-link',
@@ -73,7 +72,7 @@ const updatedMovie = {
   coverUrl: 'img/the-grand-budapest-hotel-bg.jpg',
   genre: 'Comedy',
   id: 1,
-  isFavourite: true,
+  isFavorite: true,
   overview: {
     description:
       "In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.",
@@ -93,11 +92,22 @@ const updatedMovie = {
   },
   posterUrl: 'img/the-grand-budapest-hotel-poster.jpg',
   realeseYear: 2014,
-  reviews: [],
   thumbUrl: 'img/the-grand-budapest-hotel.jpg',
   title: 'The Grand Budapest Hotel',
   trailer: 'https://some-link',
   videoUrl: 'https://some-link',
+};
+
+const review = {
+  id: 1,
+  user: {
+    id: 4,
+    name: 'Kate Muir',
+  },
+  rating: 8.9,
+  comment:
+    "Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.",
+  date: '2019-05-08T14:13:56.569Z',
 };
 
 it(`Reducer without additional parameters should return initial state`, () => {
@@ -110,12 +120,14 @@ it(`Reducer without additional parameters should return initial state`, () => {
       coverUrl: '',
       posterUrl: '',
       id: 0,
-      isFavourite: false,
+      isFavorite: false,
     },
+    reviews: [],
+    myList: [],
   });
 });
 
-it(`Reducer should update questions by load questions`, () => {
+it(`Reducer should update movies by loading movies`, () => {
   expect(
     reducer(
       {
@@ -131,7 +143,23 @@ it(`Reducer should update questions by load questions`, () => {
   });
 });
 
-it(`Reducer should update movies by changing isFavourite field`, () => {
+it(`Reducer should update myList by loading favourite movies`, () => {
+  expect(
+    reducer(
+      {
+        myList: [],
+      },
+      {
+        type: ActionType.LOAD_MYLIST,
+        payload: movies,
+      }
+    )
+  ).toEqual({
+    myList: movies,
+  });
+});
+
+it(`Reducer should update movies by changing isFavorite field`, () => {
   expect(
     reducer(
       {
@@ -149,6 +177,56 @@ it(`Reducer should update movies by changing isFavourite field`, () => {
   });
 });
 
+it(`Reducer should update reviews by loading reviews`, () => {
+  expect(
+    reducer(
+      {
+        reviews: [],
+      },
+      {
+        type: ActionType.LOAD_REVIEWS,
+        payload: [review],
+      }
+    )
+  ).toEqual({
+    reviews: [review],
+  });
+});
+
+it(`Reducer should not change state on Review post`, () => {
+  expect(
+    reducer(
+      {
+        movies: [],
+        promo: {
+          title: '',
+          genre: '',
+          realeseYear: 0,
+          coverUrl: '',
+          posterUrl: '',
+          id: 0,
+          isFavorite: false,
+        },
+      },
+      {
+        type: ActionType.POST_REVIEW,
+        payload: null,
+      }
+    )
+  ).toEqual({
+    movies: [],
+    promo: {
+      title: '',
+      genre: '',
+      realeseYear: 0,
+      coverUrl: '',
+      posterUrl: '',
+      id: 0,
+      isFavorite: false,
+    },
+  });
+});
+
 describe(`Operation work correctly`, () => {
   it(`Should make a correct API call to /films`, function () {
     const apiMock = new MockAdapter(api);
@@ -161,6 +239,22 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.LOAD_MOVIES,
+        payload: movies,
+      });
+    });
+  });
+
+  it(`Should make a correct API call to /favorite`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const moviesLoader = Operation.loadMyList();
+
+    apiMock.onGet(`/favorite`).reply(200, [movieFromServer]);
+
+    return moviesLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.LOAD_MYLIST,
         payload: movies,
       });
     });
@@ -185,9 +279,9 @@ describe(`Operation work correctly`, () => {
   it(`Should make a correct API call to /favorite/:id/:value`, function () {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const toggler = Operation.onFavouriteToggle({
+    const toggler = Operation.toggleFavorite({
       id: 1,
-      isFavourite: true,
+      isFavorite: true,
     });
 
     apiMock.onPost(`/favorite/1/0`).reply(200, movieFromServer);
@@ -197,6 +291,42 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.UPDATE_MOVIES,
         payload: movies[0],
+      });
+    });
+  });
+
+  it(`Should make a correct API call to POST /comments/:id`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const poster = Operation.postReview({
+      id: 1,
+      rating: 5,
+      comment: 'comment',
+    });
+
+    apiMock.onPost(`/comments/1`).reply(200, {});
+
+    return poster(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.POST_REVIEW,
+        payload: null,
+      });
+    });
+  });
+
+  it(`Should make a correct API call to GET /comments/:id`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const loader = Operation.loadReviews(1);
+
+    apiMock.onGet(`/comments/1`).reply(200, [review]);
+
+    return loader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.LOAD_REVIEWS,
+        payload: [review],
       });
     });
   });

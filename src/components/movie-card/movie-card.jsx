@@ -19,12 +19,7 @@ const MovieCard = (props) => {
       onMouseLeave={onMouseLeave}
     >
       <div className="small-movie-card__image" onClick={onClick}>
-        <Player
-          isPlaying={isPlaying}
-          poster={thumbUrl}
-          src={trailer}
-          isMuted={true}
-        />
+        <Player isPlaying={isPlaying} poster={thumbUrl} src={trailer} />
       </div>
 
       <h3 className="small-movie-card__title" onClick={onClick}>
