@@ -16,6 +16,7 @@ const initialState = {
     isFavorite: false,
   },
   reviews: [],
+  myList: [],
 };
 
 const ActionType = {
@@ -24,6 +25,7 @@ const ActionType = {
   UPDATE_MOVIES: `UPDATE_MOVIES`,
   POST_REVIEW: `POST_REVIEW`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
+  LOAD_MYLIST: `LOAD_MYLIST`,
 };
 
 const ActionCreator = {
@@ -51,6 +53,11 @@ const ActionCreator = {
     type: ActionType.LOAD_REVIEWS,
     payload: reviews,
   }),
+
+  loadMyList: (movies) => ({
+    type: ActionType.LOAD_MYLIST,
+    payload: createMoviesData(movies),
+  }),
 };
 
 const Operation = {
@@ -59,6 +66,20 @@ const Operation = {
       .get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.loadMovies(response.data));
+      })
+      .catch((err) => {
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  loadMyList: () => (dispatch, getState, api) => {
+    return api
+      .get(`/favorite`)
+      .then((response) => {
+        dispatch(ActionCreator.loadMyList(response.data));
       })
       .catch((err) => {
         dispatch(
@@ -142,6 +163,9 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.LOAD_MOVIES:
       return extend(state, { movies: action.payload });
+
+    case ActionType.LOAD_MYLIST:
+      return extend(state, { myList: action.payload });
 
     case ActionType.LOAD_PROMO:
       return extend(state, { promo: action.payload });

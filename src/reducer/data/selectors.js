@@ -14,6 +14,10 @@ export const getReviews = (state) => {
   return state[NameSpace.DATA].reviews;
 };
 
+export const getMyList = (state) => {
+  return state[NameSpace.DATA].myList;
+};
+
 export const getMovieById = (state, id) => {
   return getMovies(state).find((item) => item.id === id);
 };

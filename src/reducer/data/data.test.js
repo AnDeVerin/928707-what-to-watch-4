@@ -123,10 +123,11 @@ it(`Reducer without additional parameters should return initial state`, () => {
       isFavorite: false,
     },
     reviews: [],
+    myList: [],
   });
 });
 
-it(`Reducer should update questions by load questions`, () => {
+it(`Reducer should update movies by loading movies`, () => {
   expect(
     reducer(
       {
@@ -139,6 +140,22 @@ it(`Reducer should update questions by load questions`, () => {
     )
   ).toEqual({
     movies,
+  });
+});
+
+it(`Reducer should update myList by loading favourite movies`, () => {
+  expect(
+    reducer(
+      {
+        myList: [],
+      },
+      {
+        type: ActionType.LOAD_MYLIST,
+        payload: movies,
+      }
+    )
+  ).toEqual({
+    myList: movies,
   });
 });
 
@@ -222,6 +239,22 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.LOAD_MOVIES,
+        payload: movies,
+      });
+    });
+  });
+
+  it(`Should make a correct API call to /favorite`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const moviesLoader = Operation.loadMyList();
+
+    apiMock.onGet(`/favorite`).reply(200, [movieFromServer]);
+
+    return moviesLoader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.LOAD_MYLIST,
         payload: movies,
       });
     });
