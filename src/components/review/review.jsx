@@ -15,6 +15,11 @@ const Review = (props) => {
     onRatingChange,
     movie,
   } = props;
+
+  if (!movie) {
+    return `Loading movie information...`;
+  }
+
   const { id, title, coverUrl, posterUrl } = movie;
 
   return (
@@ -168,7 +173,7 @@ Review.propTypes = {
     title: PropTypes.string.isRequired,
     coverUrl: PropTypes.string.isRequired,
     posterUrl: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 };
 
 export default Review;
