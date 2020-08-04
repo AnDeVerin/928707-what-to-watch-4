@@ -15,3 +15,9 @@ export const AppRoute = {
   FILM: `/films/:id`,
   REVIEW: `/films/:id/review`,
 };
+
+export const TabName = {
+  OVERVIEW: `overview`,
+  DETAILS: `details`,
+  REVIEWS: `reviews`,
+};

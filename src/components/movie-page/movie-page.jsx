@@ -14,10 +14,9 @@ import { Operation as DataOperation } from '../../reducer/data/data.js';
 import { getMovies, getMovieById } from '../../reducer/data/selectors.js';
 import { AuthorizationStatus } from '../../reducer/user/user.js';
 import { getAuthStatus } from '../../reducer/user/selectors.js';
+import { TabName } from '../../constants.js';
 
 const MovieTabsWithActiveItem = withActiveItem(MovieTabs);
-
-const tabItems = [`overview`, `details`, `reviews`];
 
 const filterMovies = ({ genre = 'All genres', movies = [], limit = 4, id }) => {
   const filteredMovies =
@@ -143,7 +142,10 @@ const MoviePage = (props) => {
               />
             </div>
 
-            <MovieTabsWithActiveItem movie={movie} items={tabItems} />
+            <MovieTabsWithActiveItem
+              movie={movie}
+              items={Object.values(TabName)}
+            />
           </div>
         </div>
       </section>
