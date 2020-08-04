@@ -82,7 +82,7 @@ const Operation = {
         dispatch(ActionCreator.updateMovies(response.data));
       })
       .catch((err) => {
-        if (err === Error.UNAUTHORIZED) {
+        if (err.status === Error.UNAUTHORIZED) {
           history.push(AppRoute.LOGIN);
           return;
         }
@@ -102,7 +102,7 @@ const Operation = {
         history.push(`/films/${id}`);
       })
       .catch((err) => {
-        if (err === Error.UNAUTHORIZED) {
+        if (err.status === Error.UNAUTHORIZED) {
           history.push(AppRoute.LOGIN);
           return;
         }
