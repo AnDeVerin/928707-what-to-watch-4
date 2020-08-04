@@ -7,6 +7,7 @@ import withLimit from '../../hocs/with-limit/with-limit.js';
 import MovieList from '../movie-list/movie-list.jsx';
 import CatalogButton from '../catalog-button/catalog-button.jsx';
 import Promo from '../promo/promo.jsx';
+import Footer from '../footer/footer.jsx';
 
 import { getMoviesByGenre, getPromo } from '../../reducer/data/selectors.js';
 import { Operation as DataOperation } from '../../reducer/data/data.js';
@@ -26,19 +27,7 @@ const Main = ({ movies, promoMovie, onFavoriteToggle }) => {
           <LimitedMovieList movies={movies} button={CatalogButton} />
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2020 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

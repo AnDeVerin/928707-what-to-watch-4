@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import MovieTabs from '../movie-tabs/movie-tabs.jsx';
 import MovieList from '../movie-list/movie-list.jsx';
 import Header from '../header/header.jsx';
+import Footer from '../footer/footer.jsx';
 
 import withActiveItem from '../../hocs/with-active-item/with-active-item.js';
 
@@ -154,19 +155,7 @@ const MoviePage = (props) => {
           <MovieList movies={similarMovies} />
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2020 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
