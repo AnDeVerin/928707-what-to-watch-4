@@ -1,22 +1,15 @@
 /* eslint-disable camelcase */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import Adapter from 'enzyme-adapter-react-16';
+import { mount, configure } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { Router } from 'react-router-dom';
 import history from '../../history.js';
 import { AuthorizationStatus } from '../../reducer/user/user.js';
 import NameSpace from '../../reducer/name-space.js';
+
 import { MyList } from './my-list.jsx';
-
-const mockStore = configureStore([]);
-
-const user = {
-  avatar_url: '/wtw/static/avatar/5.jpg',
-  email: 'user@mail.com',
-  id: 1,
-  name: 'user',
-};
 
 const movies = [
   {
@@ -33,28 +26,28 @@ const movies = [
   },
 ];
 
+const mockStore = configureStore([]);
+configure({ adapter: new Adapter() });
+
 describe('MyList component', () => {
-  it('renders correctly', () => {
+  it(`calls passed in function on mount and props update`, () => {
+    const loadMyListMock = jest.fn();
+
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationStatus: AuthorizationStatus.AUTH,
-        user,
-      },
-      [NameSpace.DATA]: {
-        MyList: movies,
+        user: {},
       },
     });
 
-    const component = renderer
-      .create(
-        <Provider store={store}>
-          <Router history={history}>
-            <MyList loadMyList={jest.fn()} movies={movies} />
-          </Router>
-        </Provider>
-      )
-      .toJSON();
+    mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <MyList loadMyList={loadMyListMock} movies={movies} />
+        </Router>
+      </Provider>
+    );
 
-    expect(component).toMatchSnapshot();
+    expect(loadMyListMock).toHaveBeenCalledTimes(1);
   });
 });

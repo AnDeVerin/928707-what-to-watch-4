@@ -1,53 +1,56 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../constants.js';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Operation as DataOperation } from '../../reducer/data/data.js';
+import { getMyList } from '../../reducer/data/selectors.js';
 import Header from '../header/header.jsx';
+import MovieList from '../movie-list/movie-list.jsx';
+import Footer from '../footer/footer.jsx';
 
-const MyList = () => (
-  <div className="user-page">
-    <Header
-      renderTitle={() => (
-        <h1 className="page-title user-page__title">My list</h1>
-      )}
-    />
+class MyList extends PureComponent {
+  componentDidMount() {
+    const { loadMyList } = this.props;
 
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
+    loadMyList();
+  }
 
-      <div className="catalog__movies-list">
-        {/* More Articles */}
-        <article className="small-movie-card catalog__movies-card">
-          <div className="small-movie-card__image">
-            <img
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
-              alt="Fantastic Beasts: The Crimes of Grindelwald"
-              width="280"
-              height="175"
-            />
+  render() {
+    const { movies } = this.props;
+
+    return (
+      <div className="user-page">
+        <Header
+          renderTitle={() => (
+            <h1 className="page-title user-page__title">My list</h1>
+          )}
+        />
+
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
+
+          <div className="catalog__movies-list">
+            <MovieList movies={movies} />
           </div>
-          <h3 className="small-movie-card__title">
-            <a className="small-movie-card__link" href="movie-page.html">
-              Fantastic Beasts: The Crimes of Grindelwald
-            </a>
-          </h3>
-        </article>
-      </div>
-    </section>
+        </section>
 
-    <footer className="page-footer">
-      <div className="logo">
-        <Link to={AppRoute.MAIN} className="logo__link logo__link--light">
-          <span className="logo__letter logo__letter--1">W</span>
-          <span className="logo__letter logo__letter--2">T</span>
-          <span className="logo__letter logo__letter--3">W</span>
-        </Link>
+        <Footer />
       </div>
+    );
+  }
+}
 
-      <div className="copyright">
-        <p>© 2020 What to watch Ltd.</p>
-      </div>
-    </footer>
-  </div>
-);
+const mapStateToProps = (state) => ({
+  movies: getMyList(state),
+});
 
-export default MyList;
+const mapDispatchToProps = (dispatch) => ({
+  loadMyList: () => dispatch(DataOperation.loadMyList()),
+});
+
+MyList.propTypes = {
+  loadMyList: PropTypes.func.isRequired,
+  movies: PropTypes.array.isRequired,
+};
+
+export { MyList };
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);
