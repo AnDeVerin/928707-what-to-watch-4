@@ -66,7 +66,7 @@ const MoviePage = (props) => {
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={coverUrl} alt="The Grand Budapest Hotel" />
+            <img src={coverUrl} alt={title} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>

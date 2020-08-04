@@ -15,6 +15,7 @@ const initialState = {
     coverUrl: '',
     isFavorite: false,
   },
+  reviews: [],
 };
 
 const ActionType = {
@@ -22,6 +23,7 @@ const ActionType = {
   LOAD_PROMO: `LOAD_PROMO`,
   UPDATE_MOVIES: `UPDATE_MOVIES`,
   POST_REVIEW: `POST_REVIEW`,
+  LOAD_REVIEWS: `LOAD_REVIEWS`,
 };
 
 const ActionCreator = {
@@ -44,6 +46,11 @@ const ActionCreator = {
     type: ActionType.POST_REVIEW,
     payload: null,
   }),
+
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews,
+  }),
 };
 
 const Operation = {
@@ -52,6 +59,20 @@ const Operation = {
       .get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.loadMovies(response.data));
+      })
+      .catch((err) => {
+        dispatch(
+          AppActionCreator.setErrorText(err.errorMessage || err.toString())
+        );
+        dispatch(AppActionCreator.showModal());
+      });
+  },
+
+  loadReviews: (filmId) => (dispatch, getState, api) => {
+    return api
+      .get(`/comments/${filmId}`)
+      .then((response) => {
+        dispatch(ActionCreator.loadReviews(response.data));
       })
       .catch((err) => {
         dispatch(
@@ -136,6 +157,9 @@ const reducer = (state = initialState, action) => {
       updatedMovies.splice(movieIdx, 1, movie);
 
       return extend(state, { promo: updatedPromo, movies: updatedMovies });
+
+    case ActionType.LOAD_REVIEWS:
+      return extend(state, { reviews: action.payload });
   }
 
   return state;

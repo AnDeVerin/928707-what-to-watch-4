@@ -60,7 +60,6 @@ const movies = [
     },
     posterUrl: 'img/the-grand-budapest-hotel-poster.jpg',
     realeseYear: 2014,
-    reviews: [],
     thumbUrl: 'img/the-grand-budapest-hotel.jpg',
     title: 'The Grand Budapest Hotel',
     trailer: 'https://some-link',
@@ -93,11 +92,22 @@ const updatedMovie = {
   },
   posterUrl: 'img/the-grand-budapest-hotel-poster.jpg',
   realeseYear: 2014,
-  reviews: [],
   thumbUrl: 'img/the-grand-budapest-hotel.jpg',
   title: 'The Grand Budapest Hotel',
   trailer: 'https://some-link',
   videoUrl: 'https://some-link',
+};
+
+const review = {
+  id: 1,
+  user: {
+    id: 4,
+    name: 'Kate Muir',
+  },
+  rating: 8.9,
+  comment:
+    "Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.",
+  date: '2019-05-08T14:13:56.569Z',
 };
 
 it(`Reducer without additional parameters should return initial state`, () => {
@@ -112,6 +122,7 @@ it(`Reducer without additional parameters should return initial state`, () => {
       id: 0,
       isFavorite: false,
     },
+    reviews: [],
   });
 });
 
@@ -146,6 +157,22 @@ it(`Reducer should update movies by changing isFavorite field`, () => {
   ).toEqual({
     movies: [updatedMovie],
     promo: updatedMovie,
+  });
+});
+
+it(`Reducer should update reviews by loading reviews`, () => {
+  expect(
+    reducer(
+      {
+        reviews: [],
+      },
+      {
+        type: ActionType.LOAD_REVIEWS,
+        payload: [review],
+      }
+    )
+  ).toEqual({
+    reviews: [review],
   });
 });
 
@@ -235,7 +262,7 @@ describe(`Operation work correctly`, () => {
     });
   });
 
-  it(`Should make a correct API call to /comments/:id`, function () {
+  it(`Should make a correct API call to POST /comments/:id`, function () {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const poster = Operation.postReview({
@@ -251,6 +278,22 @@ describe(`Operation work correctly`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.POST_REVIEW,
         payload: null,
+      });
+    });
+  });
+
+  it(`Should make a correct API call to GET /comments/:id`, function () {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const loader = Operation.loadReviews(1);
+
+    apiMock.onGet(`/comments/1`).reply(200, [review]);
+
+    return loader(dispatch, () => {}, api).then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: ActionType.LOAD_REVIEWS,
+        payload: [review],
       });
     });
   });

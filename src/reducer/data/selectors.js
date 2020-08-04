@@ -10,6 +10,10 @@ export const getPromo = (state) => {
   return state[NameSpace.DATA].promo;
 };
 
+export const getReviews = (state) => {
+  return state[NameSpace.DATA].reviews;
+};
+
 export const getMovieById = (state, id) => {
   return getMovies(state).find((item) => item.id === id);
 };

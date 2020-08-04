@@ -10,7 +10,7 @@ exports[`ReviewCard component renders correctly 1`] = `
     <p
       className="review__text"
     >
-      Bla-bla-bla. This is some review test
+      Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.
     </p>
     <footer
       className="review__details"
@@ -18,20 +18,20 @@ exports[`ReviewCard component renders correctly 1`] = `
       <cite
         className="review__author"
       >
-        Doctor Who
+        Kate Muir
       </cite>
       <time
         className="review__date"
-        dateTime="2020-06-28"
+        dateTime="2019-05-08T14:13:56.569Z"
       >
-        June 28, 2020
+        May 8, 2019
       </time>
     </footer>
   </blockquote>
   <div
     className="review__rating"
   >
-    7.7
+    8.9
   </div>
 </div>
 `;

@@ -20,6 +20,5 @@ export const createMoviesData = (movies) =>
       stars: movie.starring,
       runTime: movie.run_time,
     },
-    reviews: [],
     videoUrl: movie.video_link,
   }));

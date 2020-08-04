@@ -1,8 +1,15 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import NameSpace from '../../reducer/name-space.js';
+
 import TabsContent from './tabs-content.jsx';
 
+const mockStore = configureStore([]);
+
 const movie = {
+  id: 1,
   title: `Fantastic Beasts: The Crimes of Grindelwald`,
   thumbUrl: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   genre: `Adventure`,
@@ -33,44 +40,18 @@ const movie = {
     ],
     runTime: 134,
   },
-  reviews: [
-    {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `2016-12-24`,
-      rating: 8.9,
-    },
-    {
-      text: `Anderson's films are too precious for some, but for those of us willing to lose ourselves in them, they're a delight. "The Grand Budapest Hotel" is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `2015-11-18`,
-      rating: 8.0,
-    },
-    {
-      text: `It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.`,
-      author: `Paula Fleri-Soler`,
-      date: `2016-12-20`,
-      rating: 7.6,
-    },
-    {
-      text: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-      author: `Kate Muir`,
-      date: `2018-02-02`,
-      rating: 9.2,
-    },
-    {
-      text: `Anderson's films are too precious for some, but for those of us willing to lose ourselves in them, they're a delight. "The Grand Budapest Hotel" is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
-      author: `Bill Goodykoontz`,
-      date: `2019-12-18`,
-      rating: 8.4,
-    },
-    {
-      text: `It is certainly a magical and childlike way of storytelling, even if the content is a little more adult. Even if the content is a little more adult`,
-      author: `Paula Fleri-Soler`,
-      date: `2020-12-22`,
-      rating: 7.0,
-    },
-  ],
+};
+
+const review = {
+  id: 1,
+  user: {
+    id: 4,
+    name: 'Kate Muir',
+  },
+  rating: 8.9,
+  comment:
+    "Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.",
+  date: '2019-05-08T14:13:56.569Z',
 };
 
 describe('TabsContent component', () => {
@@ -90,9 +71,19 @@ describe('TabsContent component', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('renders correctly on active tab Reviews', () => {
+  xit('renders correctly on active tab Reviews', () => {
+    const store = mockStore({
+      [NameSpace.DATA]: {
+        reviews: [review],
+      },
+    });
+
     const component = renderer
-      .create(<TabsContent movie={movie} activeTab={`reviews`} />)
+      .create(
+        <Provider store={store}>
+          <TabsContent movie={movie} activeTab={`reviews`} />
+        </Provider>
+      )
       .toJSON();
 
     expect(component).toMatchSnapshot();

@@ -12,7 +12,7 @@ Array [
         className="movie-card__bg"
       >
         <img
-          alt="The Grand Budapest Hotel"
+          alt="Fantastic Beasts: The Crimes of Grindelwald"
           src="https://m.media-amazon.com/images/M/MV5BYTRiOTM4YzEtN2MwMC00MjMxLWIxM2ItMGE1YzA1MjNkN2YzXkEyXkFqcGdeQXVyNjQ4ODE4MzQ@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
         />
       </div>
@@ -100,7 +100,7 @@ Array [
           >
             <a
               className="btn btn--play movie-card__button"
-              href="/player/undefined"
+              href="/player/1"
               onClick={[Function]}
               type="button"
             >
@@ -137,7 +137,7 @@ Array [
             </button>
             <a
               className="btn movie-card__button"
-              href="/films/undefined/review"
+              href="/films/1/review"
               onClick={[Function]}
             >
               Add review
