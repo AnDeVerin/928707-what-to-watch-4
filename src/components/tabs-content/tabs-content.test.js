@@ -1,12 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import NameSpace from '../../reducer/name-space.js';
-
 import TabsContent from './tabs-content.jsx';
-
-const mockStore = configureStore([]);
 
 const movie = {
   id: 1,
@@ -42,18 +36,6 @@ const movie = {
   },
 };
 
-const review = {
-  id: 1,
-  user: {
-    id: 4,
-    name: 'Kate Muir',
-  },
-  rating: 8.9,
-  comment:
-    "Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.",
-  date: '2019-05-08T14:13:56.569Z',
-};
-
 describe('TabsContent component', () => {
   it('renders correctly on active tab Overview', () => {
     const component = renderer
@@ -66,24 +48,6 @@ describe('TabsContent component', () => {
   it('renders correctly on active tab Details', () => {
     const component = renderer
       .create(<TabsContent movie={movie} activeTab={`details`} />)
-      .toJSON();
-
-    expect(component).toMatchSnapshot();
-  });
-
-  xit('renders correctly on active tab Reviews', () => {
-    const store = mockStore({
-      [NameSpace.DATA]: {
-        reviews: [review],
-      },
-    });
-
-    const component = renderer
-      .create(
-        <Provider store={store}>
-          <TabsContent movie={movie} activeTab={`reviews`} />
-        </Provider>
-      )
       .toJSON();
 
     expect(component).toMatchSnapshot();
