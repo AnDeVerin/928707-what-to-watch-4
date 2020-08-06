@@ -30,7 +30,7 @@ const Header = ({ authStatus, user, renderTitle = () => {} }) => (
         <Link to={AppRoute.MYLIST}>
           <div className="user-block__avatar">
             <img
-              src={`${HOST}${user.avatar_url}`}
+              src={user.avatar_url ? `${HOST}${user.avatar_url}` : ''}
               alt="User avatar"
               title="Go to my list"
               width="63"
